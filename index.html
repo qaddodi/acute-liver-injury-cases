@@ -4,6 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Interpreting the Liver Panel - Interactive Case Deck</title>
+<link rel="preload" as="image" href="title.jpg" fetchpriority="high" />
 <style>
 :root{--ink:#1d1b19;--muted:#463f34;--faint:#736d63;--paper:#f9f7f1;--line:#d8d0c2;--chapter:#4b4a78;--red:#a84545;--green:#3e7954;--gold:#ae8845}
 *{box-sizing:border-box}
@@ -230,7 +231,7 @@ const SLIDES = [
     "subtitle": "A pattern-based approach to acute and chronic liver injury",
     "byline": "Mohammad Almeqdadi, MD",
     "hint": "Press Next or the right arrow to begin",
-    "image": "title.png"
+    "image": "title.jpg"
   },
   {
     "type": "text",
@@ -238,7 +239,7 @@ const SLIDES = [
     "layout": "center",
     "section": "Reading the liver panel",
     "body": "<p class='lead'>A liver panel is a <b>pattern</b>, not one number to chase. Read the pattern and it often names the diagnosis for you.</p>",
-    "image": "core-principles.png"
+    "image": "core-principles.jpg"
   },
   {
     "type": "text",
@@ -248,7 +249,7 @@ const SLIDES = [
     "body": "<div class='s3col'><h1 class='section'><span style='font-size:clamp(1.38rem,2vw,1.78rem);line-height:1.08;display:block;white-space:nowrap'>&ldquo;Liver Function Tests&rdquo; vs Liver <span class='hl' style='font-style:italic'>Function</span> Tests</span></h1><div class='tablewrap shell'><table class='compare shelltable'><tr><th>Integrity</th><th>Function</th></tr><tr><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>&nbsp;</td><td>&nbsp;</td></tr></table></div></div>",
     "revealLabel": "Reveal the table",
     "reveal": "<div class='tablewrap'><table class='compare'><tr><th>Integrity</th><th>Function</th></tr><tr><td>AST</td><td>Albumin</td></tr><tr><td>ALT</td><td>Total protein</td></tr><tr><td>ALP</td><td>PT/INR</td></tr><tr><td>GGT</td><td>Total bilirubin</td></tr><tr><td>LDH</td><td></td></tr></table></div>",
-    "image": "integrity-vs-function.png"
+    "image": "integrity-vs-function.jpg"
   },
   {
     "type": "text",
@@ -258,7 +259,7 @@ const SLIDES = [
     "prompt": "<b>Does the level of enzyme elevation correlate with hepatic dysfunction?</b>",
     "revealLabel": "Reveal the answer",
     "reveal": "<p>No. The height of the transaminases reflects how much hepatocyte injury is happening, not how well the liver is working.</p><p>Synthetic function is read from albumin, INR, and bilirubin. Enzymes in the thousands can occur with preserved function, and a near-normal panel can accompany a failing liver.</p>",
-    "image": "integrity-vs-function.png"
+    "image": "integrity-vs-function.jpg"
   },
   {
     "type": "text",
@@ -270,7 +271,7 @@ const SLIDES = [
     "prompt": "<b>When the enzymes climb, how do you tell hepatocellular injury from cholestatic, using just ALT and ALP?</b>",
     "revealLabel": "Reveal the R factor",
     "reveal": "<div class='formula'><span>R factor</span><p>R = (ALT &divide; ULN) &frasl; (ALP &divide; ULN)<br><b>&gt; 5</b> hepatocellular<br><b>&lt; 2</b> cholestatic<br><b>2 to 5</b> mixed</p></div>",
-    "image": "hepatocyte.png"
+    "image": "hepatocyte.jpg"
   },
   {
     "type": "section",
@@ -278,7 +279,7 @@ const SLIDES = [
     "layout": "center",
     "section": "Case Presentations",
     "subtitle": "For each panel, read the pattern and name the diagnosis before revealing it.",
-    "image": "case-presentations.png"
+    "image": "case-presentations.jpg"
   },
   {
     "type": "case",
@@ -346,7 +347,7 @@ const SLIDES = [
     ],
     "answerTitle": "Ischemic hepatitis",
     "answer": "<ul class='keylist'><li>The <b>R factor</b> sorts injury into hepatocellular, cholestatic, or mixed.</li><li>When <b>AST and ALT are in the thousands</b>, think:<ul class='subbul'><li>Acute viral hepatitis</li><li>Acetaminophen toxicity</li><li>Ischemic hepatitis</li></ul></li><li><b>ALT:LDH &lt; 1.5</b> supports ischemic hepatitis.</li></ul>",
-    "image": "ischemic-hepatitis.png"
+    "image": "ischemic-hepatitis.jpg"
   },
   {
     "type": "case",
@@ -414,7 +415,7 @@ const SLIDES = [
     ],
     "answerTitle": "Alcoholic hepatitis",
     "answer": "<ul class='keylist'><li><b>AST:ALT &gt; 2</b>, with AST in the <b>100s</b>, not the 1000s.</li><li>AST in the 1000s is not alcoholic hepatitis; look for another cause.</li><li><b>Bilirubin and INR</b> define severity.</li><li><b>MELD</b> is replacing the Maddrey discriminant function in many centers because it predicts mortality more accurately.</li></ul>",
-    "image": "alcoholic-hepatitis.png"
+    "image": "alcoholic-hepatitis.jpg"
   },
   {
     "type": "text",
@@ -426,7 +427,7 @@ const SLIDES = [
     "prompt": "<b>Why is AST:ALT greater than 2 in alcohol use?</b>",
     "revealLabel": "Reveal the mechanism",
     "reveal": "<p>Both AST and ALT are transaminases, and both need <b>pyridoxal 5'-phosphate (PLP, the active form of vitamin B6)</b> as a cofactor to work.</p><p><b>ALT is about twice as dependent on PLP as AST.</b> Chronic alcohol use depletes B6, so ALT activity falls roughly twice as much as AST activity. The measured ALT drops, and the ratio settles around 2:1.</p><p>Mitochondrial AST released from alcohol-injured hepatocytes adds further to the AST side, pushing the ratio higher still.</p>",
-    "image": "ast-alt-ratio.png"
+    "image": "ast-alt-ratio.jpg"
   },
   {
     "type": "case",
@@ -500,7 +501,7 @@ const SLIDES = [
     "answerTitle": "Acetaminophen toxicity",
     "answer": "<ul class='keylist'><li><b>ALT &gt; 10,000</b> should trigger acetaminophen toxicity.</li><li>Massive necrosis can make ALT fall later, so a <b>normalizing ALT is not automatically reassuring</b>.</li><li><b>Do not delay NAC</b> when acetaminophen toxicity is suspected.</li><li>Use the <b>King's College Criteria</b> (arterial pH &lt; 7.30, or INR &gt; 6.5 with Cr &gt; 3.4 and grade III&ndash;IV encephalopathy) to trigger transplant evaluation &mdash; this, not MELD, is the acetaminophen-ALF standard.</li></ul>",
     "trivia": "Acetaminophen toxicity is an uncommon but recognized cause of acute pancreatitis; the elevated lipase here fits, though lipase is also raised nonspecifically in critical illness.",
-    "image": "acetaminophen-toxicity.png"
+    "image": "acetaminophen-toxicity.jpg"
   },
   {
     "type": "case",
@@ -568,7 +569,7 @@ const SLIDES = [
     ],
     "answerTitle": "Rhabdomyolysis",
     "answer": "<ul class='keylist'><li><b>AST out of proportion to ALT</b> points away from the liver.</li><li>ALT can rise in severe rhabdomyolysis, but it stays <b>far below AST</b>.</li><li>Isolated AST elevation can come from:<ul class='subbul'><li>Skeletal muscle</li><li>Cardiac muscle</li><li>Red cells</li><li>Kidney</li></ul></li><li>Confirm the muscle source with <b>CK</b>.</li></ul>",
-    "image": "rhabdomyolysis.png"
+    "image": "rhabdomyolysis.jpg"
   },
   {
     "type": "case",
@@ -636,7 +637,7 @@ const SLIDES = [
     ],
     "answerTitle": "Acute liver injury in chronic alcohol use",
     "answer": "<ul class='keylist'><li><b>AST:ALT &gt; 2</b> fits alcohol, but values in the <b>thousands</b> are not alcoholic hepatitis.</li><li>Alcohol hallmarks:<ul class='subbul'><li>High GGT</li><li>High MCV</li><li>Low platelets</li><li>AST:ALT &gt; 2</li></ul></li><li>The alcohol pattern does not close the workup; keep looking for a second injury.</li></ul>",
-    "image": "alcohol-plus-acute-injury.png"
+    "image": "alcohol-plus-acute-injury.jpg"
   },
   {
     "type": "case",
@@ -704,7 +705,7 @@ const SLIDES = [
     ],
     "answerTitle": "Cholestatic injury",
     "answer": "<ul class='keylist'><li><b>R factor &lt; 2</b>: mainly ALP and GGT.</li><li>Next step is a <b>right upper quadrant ultrasound</b> to look for ductal dilation.</li><li>A rising <b>INR</b> can come from vitamin K deficiency; give vitamin K IV, not PO.</li></ul>",
-    "image": "cholestatic-injury.png"
+    "image": "cholestatic-injury.jpg"
   },
   {
     "type": "case",
@@ -729,7 +730,7 @@ const SLIDES = [
     "qstem": "Why is the INR high, and how would you correct it?",
     "revealLabel": "Reveal",
     "answer": "<p><b>Why is it high?</b> Cholestasis blocks bile flow. Without bile in the gut, the fat-soluble vitamins A, D, E, and K are not absorbed. Vitamin K deficiency impairs clotting factors II, VII, IX, and X, so the INR rises.</p><p><b>How do you correct it?</b> Give vitamin K <b>intravenously (slowly), not by mouth</b>. Oral vitamin K needs bile to be absorbed, and here no bile is reaching the gut, so a PO dose will not work. Subcutaneous dosing absorbs erratically and is not preferred.</p>",
-    "image": "cholestatic-injury.png"
+    "image": "cholestatic-injury.jpg"
   },
   {
     "type": "branch",
@@ -762,7 +763,7 @@ const SLIDES = [
         ]
       }
     ],
-    "image": "cholestatic-injury.png"
+    "image": "cholestatic-injury.jpg"
   },
   {
     "type": "case",
@@ -830,7 +831,7 @@ const SLIDES = [
     ],
     "answerTitle": "Extrahepatic ALP",
     "answer": "<ul class='keylist'><li><b>ALP high with a normal GGT</b> means the source is not hepatic.</li><li>ALP isoenzymes come from:<ul class='subbul'><li><b>Hepatocytes</b> (canalicular side)</li><li><b>Cholangiocytes</b> (biliary tree)</li><li><b>Intestinal epithelium</b> (small bowel obstruction)</li><li><b>Kidney</b> (CKD/AKI)</li><li><b>Bone</b> (osteoblastic, not lytic)</li><li><b>Placenta</b> (1st and 3rd trimester)</li></ul></li></ul>",
-    "image": "extrahepatic-alp.png"
+    "image": "extrahepatic-alp.jpg"
   },
   {
     "type": "case",
@@ -898,7 +899,7 @@ const SLIDES = [
     ],
     "answerTitle": "Alcohol drinking pattern",
     "answer": "<ul class='keylist'><li>Drinking hallmarks:<ul class='subbul'><li>High GGT</li><li>AST:ALT &gt; 2</li><li>High MCV</li><li>Low platelets</li><li>High IgA</li></ul></li><li><b>GGT rises with alcohol</b> even without major liver injury.</li></ul>",
-    "image": "alcohol-markers.png"
+    "image": "alcohol-markers.jpg"
   },
   {
     "type": "case",
@@ -966,7 +967,7 @@ const SLIDES = [
     ],
     "answerTitle": "Infiltrative liver injury",
     "answer": "<ul class='keylist'><li><b>ALP and GGT up with a normal bilirubin</b> suggests an infiltrative pattern.</li><li>Causes:<ul class='subbul'><li>Sarcoidosis</li><li>Syphilis</li><li>Drug-induced injury</li><li>Early PBC</li><li>Infiltrating carcinoma</li></ul></li></ul>",
-    "image": "infiltrative-liver-injury.png"
+    "image": "infiltrative-liver-injury.jpg"
   },
   {
     "type": "case",
@@ -1034,13 +1035,13 @@ const SLIDES = [
     ],
     "answerTitle": "Cirrhosis",
     "answer": "<ul class='keylist'><li><b>AST &gt; ALT</b> can be a cirrhosis clue even when values look near normal.</li><li>Markers of chronic dysfunction and portal hypertension:<ul class='subbul'><li>Low albumin</li><li>High INR</li><li>High bilirubin</li><li>Low platelets</li></ul></li><li><b>Low platelets</b> are especially useful; they often reflect portal hypertension.</li></ul>",
-    "image": "cirrhosis-pattern.png"
+    "image": "cirrhosis-pattern.jpg"
   },
   {
     "type": "blank",
     "ch": "cirrhosis",
     "layout": "plain",
-    "image": "ast-alt-cirrhosis.png"
+    "image": "ast-alt-cirrhosis.jpg"
   },
   {
     "type": "case",
@@ -1108,7 +1109,7 @@ const SLIDES = [
     ],
     "answerTitle": "Chronic liver disease",
     "answer": "<ul class='keylist'><li>Mild elevation with <b>ALT &gt; AST</b>.</li><li>Work up:<ul class='subbul'><li>Hepatitis B and C</li><li>Hemochromatosis</li><li>Autoimmune hepatitis</li><li>A1AT deficiency</li><li>Wilson disease</li><li>MASLD</li></ul></li><li>MASLD is common but remains a <b>diagnosis of exclusion</b>.</li></ul>",
-    "image": "chronic-liver-disease.png"
+    "image": "chronic-liver-disease.jpg"
   },
   {
     "type": "case",
@@ -1176,7 +1177,7 @@ const SLIDES = [
     ],
     "answerTitle": "Hemolysis with possible DIC",
     "answer": "<ul class='keylist'><li><b>High AST with a normal ALT</b> indicates an extrahepatic source.</li><li>Findings that support hemolysis:<ul class='subbul'><li>High LDH</li><li>High bilirubin</li><li>High MCV</li></ul></li><li><b>High INR with low platelets</b> raises concern for DIC.</li></ul>",
-    "image": "hemolysis-dic.png"
+    "image": "hemolysis-dic.jpg"
   },
   {
     "type": "case",
@@ -1245,14 +1246,14 @@ const SLIDES = [
     ],
     "answerTitle": "Acute Wilson disease",
     "answer": "<ul class='keylist'><li><b>AST:ALT &gt; 2.2</b>.</li><li><b>ALP:bilirubin &lt; 4</b>: bilirubin is out of proportion to a low ALP.</li><li>Supportive findings:<ul class='subbul'><li>Coombs-negative hemolytic anemia</li><li>High bilirubin</li><li>High LDH</li><li>High MCV</li><li>High INR</li></ul></li><li>This is a <b>transplant emergency</b>.</li></ul>",
-    "image": "acute-wilson-disease.png"
+    "image": "acute-wilson-disease.jpg"
   },
   {
     "type": "blank",
     "ch": "summary",
     "layout": "plain",
     "fit": "contain",
-    "image": "diagnostic-algorithm.png"
+    "image": "diagnostic-algorithm.jpg"
   },
   {
     "type": "end",
@@ -1261,7 +1262,7 @@ const SLIDES = [
     "title": "Thank you.",
     "subtitle": "The goal is not to memorize every lab, but to read the pattern well enough to choose the next step.",
     "hint": "Press Reset to run the cases again",
-    "image": "final-reveal.png"
+    "image": "final-reveal.jpg"
   }
 ];
 const BACKGROUND_IMAGE_BASE_PATH = "";
@@ -1275,8 +1276,31 @@ const bgA = document.getElementById("bgLayerA");
 const bgB = document.getElementById("bgLayerB");
 let activeBg = bgA, inactiveBg = bgB, idx = 0, isTransitioning = false, timer = null;
 let currentBgKey = "", currentBgVisualKey = "";
+const imageLoads = new Map();
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const SLIDE_LEAVE_MS = 220;
+function preloadImage(src){
+  if(!src) return Promise.resolve();
+  if(imageLoads.has(src)) return imageLoads.get(src);
+  const load = new Promise(resolve => {
+    const image = new Image();
+    image.decoding = "async";
+    image.onload = async () => {
+      try { await image.decode(); } catch(_) {}
+      resolve();
+    };
+    image.onerror = resolve;
+    image.src = src;
+  });
+  imageLoads.set(src, load);
+  return load;
+}
+function warmNearby(index){
+  const sources = [index + 1, index + 2, index - 1]
+    .filter(i => i >= 0 && i < SLIDES.length)
+    .map(i => SLIDES[i].image ? BACKGROUND_IMAGE_BASE_PATH + SLIDES[i].image : "");
+  sources.reduce((ready, src) => ready.then(() => preloadImage(src)), Promise.resolve());
+}
 function meta(s){ return CHAPTERS[s.ch] || CHAPTERS.title; }
 function esc(v){ return String(v ?? "").replace(/[&<>"']/g, ch => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[ch])); }
 function shouldHideCaseTell(s){ return s.type === "case" && !!s.answerTitle && !s.done; }
@@ -1531,6 +1555,7 @@ function render(direction=0){
   applyRowFocus(s);
   updateTableBlurLayers(s);
   updateChrome();
+  warmNearby(idx);
   requestAnimationFrame(() => requestAnimationFrame(() => { updateTableBlurLayers(s); slideEl.classList.add("is-visible"); }));
 }
 function slideLabel(s){
@@ -1593,13 +1618,14 @@ function softSwap(target){
     slideEl.focus({preventScroll:true});
   }, 200);
 }
-function transitionTo(target,direction=0){
+async function transitionTo(target,direction=0){
   if(isTransitioning || target === idx || target < 0 || target >= SLIDES.length) return;
-  if(reduceMotion){ idx = target; render(direction); slideEl.focus({preventScroll:true}); return; }
-  if(sameTable(SLIDES[idx], SLIDES[target])){ softSwap(target); return; }
   isTransitioning = true;
   updateChrome();
   const nextSlide = SLIDES[target];
+  await preloadImage(nextSlide.image ? BACKGROUND_IMAGE_BASE_PATH + nextSlide.image : "");
+  if(reduceMotion){ idx = target; render(direction); isTransitioning = false; updateChrome(); slideEl.focus({preventScroll:true}); return; }
+  if(sameTable(SLIDES[idx], nextSlide)){ isTransitioning = false; softSwap(target); return; }
   applyStageState(nextSlide);
   setBg(nextSlide, meta(nextSlide));
   updateTableBlurLayers(nextSlide);
