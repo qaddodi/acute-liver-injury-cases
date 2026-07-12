@@ -153,7 +153,12 @@ h1.section,.section-title,.titlebox h1{text-shadow:0 1px 0 rgba(255,255,255,.95)
 .answer-no{display:inline-block;margin-right:.18em;padding:.04em .28em;border-radius:3px;background:var(--chapter);color:#fff;font-size:1.42em;font-weight:bold;line-height:1.05;text-shadow:none}
 .slide.right .stack.hepatocyte-stack{margin-right:clamp(22px,4vw,58px)}
 .slide.right .stack.alcohol-ratio-stack{margin-right:clamp(64px,8vw,140px)}
-.alcohol-ratio-stack .mechanism-note{font-size:1.08rem;line-height:1.38;color:var(--faint);font-style:italic}
+.mechanism-list{list-style:none;margin:4px 0 0;padding:0}
+.mechanism-list li{position:relative;margin:0 0 18px;padding-left:29px;font-size:1.28rem;line-height:1.42}
+.mechanism-list li:before{content:"\25B8";position:absolute;left:2px;top:.03em;color:var(--chapter);font-size:1.15em;font-weight:bold}
+.alcohol-ratio-stack h1.section{color:var(--ink)}
+.alcohol-ratio-stack .mechanism-note{padding-left:0;font-size:1.08rem;line-height:1.38;color:var(--faint);font-style:italic}
+.mechanism-list li.mechanism-note:before{content:none}
 /* --- extra-obscured background is applied per background layer in script --- */
 /* --- empty-then-fill table (slide 3) --- */
 .s3 .answer{display:none}
@@ -486,11 +491,9 @@ const SLIDES = [
     "ch": "alcohol",
     "layout": "right",
     "stackClass": "stack wide narrow alcohol-ratio-stack",
-    "section": "Why AST:ALT > 2 in alcohol",
-    "body": "<p class='lead'>In alcohol-associated liver disease the ratio is classically greater than 2.</p>",
-    "prompt": "<b>Why is AST:ALT greater than 2 in alcohol use?</b>",
+    "section": "Why is AST:ALT greater than 2 in alcohol?",
     "revealLabel": "Reveal the mechanism",
-    "reveal": "<p>Both AST and ALT are transaminases, and both need <b>pyridoxal 5'-phosphate (PLP, the active form of vitamin B6)</b> as a cofactor to work.</p><p><b>ALT is about twice as dependent on PLP as AST.</b> Chronic alcohol use causes a <b>functional PLP deficiency</b>, so ALT activity falls roughly twice as much as AST activity. The measured ALT drops, and the ratio settles around 2:1.</p><p class='mechanism-note'>Mitochondrial AST released from alcohol-injured hepatocytes adds further to the AST side, pushing the ratio higher still.</p>",
+    "reveal": "<ul class='mechanism-list'><li>Both AST and ALT are transaminases, and both need <b>pyridoxal 5'-phosphate (PLP, the active form of vitamin B6)</b> as a cofactor to work.</li><li><b>ALT is about twice as dependent on PLP as AST.</b> Chronic alcohol use causes a <b>functional PLP deficiency</b>, so ALT activity falls roughly twice as much as AST activity. The measured ALT drops, and the ratio settles around 2:1.</li><li class='mechanism-note'>Mitochondrial AST released from alcohol-injured hepatocytes adds further to the AST side, pushing the ratio higher still.</li></ul>",
     "image": "ast-alt-ratio.jpg"
   },
   {
