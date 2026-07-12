@@ -198,16 +198,13 @@ h1.section,.section-title,.titlebox h1{text-shadow:0 1px 0 rgba(255,255,255,.95)
 /* --- APAP + ethanol teaching interlude --- */
 .slide.right .stack.apap-risk-stack{width:min(680px,100%);max-width:680px;margin-right:clamp(8px,2vw,34px)}
 .apap-risk-stack h1.section{font-size:clamp(2.45rem,3.7vw,3.75rem);line-height:1.02;margin-bottom:14px}
-.apap-risk-stack .qstem{font-size:1.52rem;margin-bottom:14px;padding:15px 17px;border-left:0;background:rgba(255,255,255,.34);backdrop-filter:blur(34px) saturate(1.15);-webkit-backdrop-filter:blur(34px) saturate(1.15);box-shadow:0 8px 24px rgba(42,38,31,.12)}
+.apap-risk-stack .qstem{font-size:1.68rem;margin-bottom:14px;padding:15px 17px;border-left:0;background:rgba(255,255,255,.34);backdrop-filter:blur(34px) saturate(1.15);-webkit-backdrop-filter:blur(34px) saturate(1.15);box-shadow:0 8px 24px rgba(42,38,31,.12)}
 .risk-set{display:grid;gap:9px;margin:10px 0 14px}
 .risk-row{display:grid;grid-template-columns:38px 1fr;gap:11px;align-items:center;padding:12px 14px;border:1px solid rgba(75,74,120,.20);background:rgba(255,255,255,.34);backdrop-filter:blur(34px) saturate(1.15);-webkit-backdrop-filter:blur(34px) saturate(1.15);box-shadow:0 8px 24px rgba(42,38,31,.11)}
 .risk-row .letter{display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:#4b4a78;color:#fff;font-weight:bold;font-size:16px}
-.risk-row b{display:block;color:#34345e;font-size:1.12rem}.risk-row small{display:block;color:#5f584f;font-size:.92rem;margin-top:2px}
+.risk-row b{display:block;color:#34345e;font-size:1.24rem}.risk-row small{display:block;color:#5f584f;font-size:1rem;margin-top:2px}
 .apap-risk-stack.focus-answer .answer{border-left:0;background:rgba(255,255,255,.34);backdrop-filter:blur(34px) saturate(1.15);-webkit-backdrop-filter:blur(34px) saturate(1.15)}
-.risk-ranking{font-size:2rem!important;color:#34345e;margin:0 0 10px!important}.risk-explain{font-size:1.06rem!important;line-height:1.35!important;margin-bottom:8px!important}
-.slide.right .stack.apap-mech-stack{width:min(700px,100%);max-width:700px;margin-right:clamp(4px,1.5vw,24px)}
-.apap-mech-stack h1.section{font-size:clamp(2.7rem,4vw,4rem);margin-bottom:14px}
-.mechanism-pair{display:grid;gap:12px}.mechanism-card{padding:16px 18px;background:rgba(255,255,255,.34);border:1px solid rgba(75,74,120,.18);backdrop-filter:blur(36px) saturate(1.15);-webkit-backdrop-filter:blur(36px) saturate(1.15);box-shadow:0 8px 24px rgba(42,38,31,.12)}.mechanism-card h3{margin:0 0 7px;color:#34345e;font-size:1.38rem}.mechanism-card p{margin:0;font-size:1.12rem;line-height:1.38}.mechanism-arrow{color:#34345e;font-weight:bold}.clinical-anchor{margin-top:13px;padding:12px 15px;background:rgba(255,255,255,.34);border:1px solid rgba(75,74,120,.18);backdrop-filter:blur(36px) saturate(1.15);-webkit-backdrop-filter:blur(36px) saturate(1.15);color:#2f2b26;font-size:.98rem;line-height:1.35;border-radius:3px;box-shadow:0 8px 24px rgba(42,38,31,.12)}
+.risk-ranking{font-size:2.15rem!important;color:#34345e;margin:0 0 10px!important}.risk-explain{font-size:1.16rem!important;line-height:1.35!important;margin-bottom:8px!important}
 /* --- accessibility & focus --- */
 .reveal-btn:focus-visible,.navbtn:focus-visible,.seg:focus-visible,.close:focus-visible{outline:2px solid #34345e;outline-offset:2px}
 .seg:focus{outline:2px solid #34345e;outline-offset:2px}
@@ -575,20 +572,18 @@ const SLIDES = [
     "ch": "hepatocellular",
     "layout": "right",
     "stackClass": "stack apap-risk-stack focus-answer",
-    "section": "Same overdose. Different prognosis.",
-    "body": "<p class='qstem'>Who has the best prognosis? Arrange the three patients from best to worst.</p><div class='risk-set'><div class='risk-row'><span class='letter'>A</span><span><b>APAP overdose alone</b><small>No acute or chronic alcohol exposure</small></span></div><div class='risk-row'><span class='letter'>B</span><span><b>APAP + ethanol still present</b><small>Acute alcohol co-ingestion</small></span></div><div class='risk-row'><span class='letter'>C</span><span><b>Chronic alcohol; ethanol cleared</b><small>Chronic exposure without acute competition</small></span></div></div>",
+    "section": "3 patients with APAP overdose",
+    "body": "<p class='qstem'>Who has the best prognosis? Arrange the three patients from best to worst.</p><div class='risk-set'><div class='risk-row'><span class='letter'>A</span><span><b>APAP overdose alone</b><small>No acute or chronic alcohol exposure</small></span></div><div class='risk-row'><span class='letter'>B</span><span><b>APAP and ethanol simultaneous</b><small>Acute alcohol co-ingestion</small></span></div><div class='risk-row'><span class='letter'>C</span><span><b>Chronic alcohol consumption</b><small>Chronic exposure without acute competition</small></span></div></div>",
     "revealLabel": "Reveal the ranking",
-    "reveal": "<p class='risk-ranking'><b>B &gt; A &gt; C</b></p><p class='risk-explain'><b>Best:</b> acute ethanol is still present.</p><p class='risk-explain'><b>Worst:</b> chronic exposure with ethanol cleared.</p><p class='risk-explain soft'>Why? The answer is NAPQI.</p>",
+    "reveal": "<p class='risk-ranking'><b>B &gt; A &gt; C</b></p><p class='risk-explain'><b>Best:</b> acute ethanol is still present.</p><p class='risk-explain'><b>Worst:</b> chronic exposure with ethanol cleared.</p>",
     "image": "apap-alcohol-three-patients.jpg"
   },
   {
-    "type": "text",
+    "type": "image",
     "ch": "hepatocellular",
-    "layout": "right",
-    "stackClass": "stack apap-mech-stack",
-    "section": "One enzyme. Two opposing effects.",
-    "body": "<div class='mechanism-pair'><div class='mechanism-card'><h3>Acute ethanol present</h3><p>Ethanol occupies CYP2E1 <span class='mechanism-arrow'>&rarr;</span> less APAP oxidation <span class='mechanism-arrow'>&rarr;</span> less early NAPQI.</p></div><div class='mechanism-card chronic'><h3>Chronic exposure, ethanol cleared</h3><p>Competition disappears while CYP2E1 activity remains increased <span class='mechanism-arrow'>&rarr;</span> more NAPQI formation.</p></div></div><div class='clinical-anchor'><b>Mechanism, not management:</b> ethanol is not an antidote. Give NAC whenever indicated.</div>",
-    "image": "apap-alcohol-cyp2e1.jpg"
+    "layout": "plain",
+    "fit": "contain",
+    "image": "apap-alcohol-interaction.jpg"
   },
   {
     "type": "case",
@@ -1540,6 +1535,7 @@ function branchHtml(s){
   return `<div class="stack wide">${head(s)}<div class="branch"><p class="branch-lead">${s.intro}</p><p class="branch-q">${s.q}</p><div class="branch-cols">${cards}</div></div></div>`;
 }
 function htmlFor(s){
+  if(s.type === "image") return "";
   if(s.type === "title" || s.type === "end") return titleHtml(s);
   if(s.type === "text") return textHtml(s);
   if(s.type === "section") return sectionHtml(s);
@@ -1549,9 +1545,10 @@ function htmlFor(s){
 }
 function buildPrintDeck(){
   const printDeck = document.getElementById("printDeck");
-  printDeck.innerHTML = SLIDES.map((s, i) => {
+  const printableSlides = SLIDES.filter(s => s.type !== "image");
+  printDeck.innerHTML = printableSlides.map((s, i) => {
     const chapter = meta(s);
-    return `<article class="print-slide" style="--chapter:${chapter.color}"><div class="print-slide-number">${esc(i + 1)} / ${esc(SLIDES.length)} &middot; ${esc(slideLabel(s))}</div>${htmlFor(s)}</article>`;
+    return `<article class="print-slide" style="--chapter:${chapter.color}"><div class="print-slide-number">${esc(i + 1)} / ${esc(printableSlides.length)} &middot; ${esc(slideLabel(s))}</div>${htmlFor(s)}</article>`;
   }).join("");
 }
 function fillInlineTable(){
