@@ -4,6 +4,23 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Interpreting the Liver Panel - Interactive Case Deck</title>
+<meta name="description" content="An interactive, case-based guide to interpreting liver panels and recognizing acute and chronic liver injury patterns." />
+<meta name="author" content="Mohammad Almeqdadi, MD" />
+<meta name="robots" content="index, follow" />
+<link rel="canonical" href="https://qaddodi.github.io/acute-liver-injury-cases/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Interpreting the Liver Panel" />
+<meta property="og:title" content="Interpreting the Liver Panel — Interactive Case Deck" />
+<meta property="og:description" content="A pattern-based, case-driven approach to acute and chronic liver injury by Mohammad Almeqdadi, MD." />
+<meta property="og:url" content="https://qaddodi.github.io/acute-liver-injury-cases/" />
+<meta property="og:image" content="https://qaddodi.github.io/acute-liver-injury-cases/title.jpg" />
+<meta property="og:image:alt" content="Interpreting the Liver Panel interactive case deck" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:creator" content="@mfalmeqdadi" />
+<meta name="twitter:title" content="Interpreting the Liver Panel — Interactive Case Deck" />
+<meta name="twitter:description" content="A pattern-based, case-driven approach to acute and chronic liver injury." />
+<meta name="twitter:image" content="https://qaddodi.github.io/acute-liver-injury-cases/title.jpg" />
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"LearningResource","name":"Interpreting the Liver Panel","description":"An interactive, case-based guide to interpreting liver panels and recognizing acute and chronic liver injury patterns.","url":"https://qaddodi.github.io/acute-liver-injury-cases/","image":"https://qaddodi.github.io/acute-liver-injury-cases/title.jpg","author":{"@type":"Person","name":"Mohammad Almeqdadi, MD","sameAs":"https://x.com/mfalmeqdadi"},"educationalUse":"instruction","learningResourceType":"interactive case deck","inLanguage":"en"}</script>
 <link rel="preload" as="image" href="title.jpg" fetchpriority="high" />
 <style>
 :root{--ink:#1d1b19;--muted:#463f34;--faint:#736d63;--paper:#f9f7f1;--line:#d8d0c2;--chapter:#4b4a78;--red:#a84545;--green:#3e7954;--gold:#ae8845}
@@ -178,7 +195,7 @@ h1.section,.section-title,.titlebox h1{text-shadow:0 1px 0 rgba(255,255,255,.95)
 <body>
 <div class="app">
   <header class="topbar"><span class="case-title">Interpreting the Liver Panel</span><span class="act-tag" id="actTag"></span><div class="topbar-actions"><button id="reset" class="topbar-btn" type="button" title="Restart the deck">Reset</button><button id="fullscreen" class="topbar-btn fullscreen-btn" type="button" aria-label="Enter fullscreen">Fullscreen</button></div></header>
-  <main class="stage" id="stage"><div class="bg-layer is-active" id="bgLayerA" aria-hidden="true"></div><div class="bg-layer" id="bgLayerB" aria-hidden="true"></div><section class="slide" id="slide" tabindex="-1" role="region" aria-label="Slide"></section></main>
+  <main class="stage" id="stage"><div class="bg-layer is-active" id="bgLayerA" aria-hidden="true"></div><div class="bg-layer" id="bgLayerB" aria-hidden="true"></div><section class="slide title-slide right" id="slide" tabindex="-1" role="region" aria-label="Interpreting the Liver Panel"><div class="titlebox"><div class="kicker">Interactive Case Deck</div><h1>Interpreting the Liver Panel</h1><p class="sub">A pattern-based approach to acute and chronic liver injury</p><p class="byline">Mohammad Almeqdadi, MD</p><a class="social" href="https://x.com/mfalmeqdadi" target="_blank" rel="noopener noreferrer">X: @mfalmeqdadi</a><p class="hint">Enable JavaScript to use the interactive case deck.</p></div></section></main>
   <footer class="nav"><div class="progress" id="progress"></div><span class="mobilecrumb" id="mobilecrumb"></span><span class="divider"></span><span class="counter" id="counter"></span><div class="rightnav"><button class="navbtn" id="prev"><span class="chev">&lsaquo;</span> Prev</button><button class="navbtn" id="next">Next <span class="chev">&rsaquo;</span></button></div></footer>
 </div>
 <script>
@@ -1306,6 +1323,12 @@ const SLIDES = [
   }
 ];
 const BACKGROUND_IMAGE_BASE_PATH = "";
+const LAB_SIGNATURES = new WeakMap(
+  SLIDES.filter(slide => Array.isArray(slide.labs)).map(slide => [
+    slide,
+    slide.labs.map(({name, value, clue}) => `${name}\u001f${value}\u001f${Boolean(clue)}`).join("\u001e")
+  ])
+);
 const PAPER_FALLBACK = "linear-gradient(120deg,rgba(249,247,241,.88),rgba(231,225,214,.74)), radial-gradient(80% 70% at 18% 60%,rgba(84,127,146,.18),transparent 62%), radial-gradient(65% 70% at 85% 28%,rgba(174,136,69,.16),transparent 64%)";
 const stage = document.getElementById("stage");
 const slideEl = document.getElementById("slide");
@@ -1367,7 +1390,6 @@ function paintBg(layer,state){
   layer.style.backgroundPosition = state.position;
   layer.style.filter = state.filter;
 }
-function updateTableBlurLayers(){}
 function setBg(s,c,instant=false){
   stage.style.setProperty("--bg", c.bg);
   const state = bgStateFor(s,c);
@@ -1521,7 +1543,6 @@ function wire(s){
       rb.setAttribute("aria-expanded","true");
       rb.style.display = "none";
       s.done = true;
-      updateTableBlurLayers(s);
       updateChrome();
       return;
     }
@@ -1533,14 +1554,12 @@ function wire(s){
       applyStageState(s);
       setBg(s, meta(s));
     }
-    updateTableBlurLayers(s);
     updateChrome();
   });
   if(s.done){
     const ans = slideEl.querySelector("[data-answer]");
     if(!fillInlineTable() && ans) ans.hidden = false;
     if(rb) rb.style.display = "none";
-    updateTableBlurLayers(s);
   }
   // branch cards; open/closed state persists per slide
   const cards = slideEl.querySelectorAll("[data-branch]");
@@ -1572,7 +1591,7 @@ function applyStageState(s){
 function sameTable(a,b){
   return !!a && !!b && a.type === "case" && b.type === "case" && !!a.labs && !!b.labs
     && (a.layout||"") === (b.layout||"") && a.image === b.image
-    && JSON.stringify(a.labs) === JSON.stringify(b.labs);
+    && LAB_SIGNATURES.get(a) === LAB_SIGNATURES.get(b);
 }
 function applyRowFocus(s){
   slideEl.querySelectorAll(".labtable tr").forEach(tr => {
@@ -1593,10 +1612,9 @@ function render(direction=0){
   slideEl.scrollTop = 0;
   wire(s);
   applyRowFocus(s);
-  updateTableBlurLayers(s);
   updateChrome();
   warmNearby(idx);
-  requestAnimationFrame(() => requestAnimationFrame(() => { updateTableBlurLayers(s); slideEl.classList.add("is-visible"); }));
+  requestAnimationFrame(() => requestAnimationFrame(() => slideEl.classList.add("is-visible")));
 }
 function slideLabel(s){
   const raw = s.section || s.sectionHtml || s.title || s.caseNo || meta(s).label || "";
@@ -1636,7 +1654,6 @@ function softSwap(target){
   const nextSlide = SLIDES[target];
   applyStageState(nextSlide);
   setBg(nextSlide, meta(nextSlide));
-  updateTableBlurLayers(nextSlide);
   clearTimeout(timer);
   if(headChanges) headEl.classList.add("swapping");
   panelEl.classList.add("swapping");
@@ -1651,8 +1668,7 @@ function softSwap(target){
     setBg(s,c);
     wire(s);
     applyRowFocus(s);
-    updateTableBlurLayers(s);
-    requestAnimationFrame(() => { updateTableBlurLayers(s); headEl.classList.remove("swapping"); panelEl.classList.remove("swapping"); });
+    requestAnimationFrame(() => { headEl.classList.remove("swapping"); panelEl.classList.remove("swapping"); });
     isTransitioning = false;
     updateChrome();
     slideEl.focus({preventScroll:true});
@@ -1668,7 +1684,6 @@ async function transitionTo(target,direction=0){
   if(sameTable(SLIDES[idx], nextSlide)){ isTransitioning = false; softSwap(target); return; }
   applyStageState(nextSlide);
   setBg(nextSlide, meta(nextSlide));
-  updateTableBlurLayers(nextSlide);
   clearTimeout(timer);
   slideEl.classList.remove("is-visible","enter-next","enter-prev");
   slideEl.classList.add(direction > 0 ? "leaving-next" : "leaving-prev");
@@ -1709,8 +1724,6 @@ fullscreenBtn.addEventListener("click", async () => {
 });
 document.addEventListener("fullscreenchange", updateFullscreenButton);
 document.addEventListener("webkitfullscreenchange", updateFullscreenButton);
-window.addEventListener("resize", () => updateTableBlurLayers(SLIDES[idx]));
-slideEl.addEventListener("scroll", () => updateTableBlurLayers(SLIDES[idx]), {passive:true});
 document.addEventListener("keydown", e => {
   if(e.key === "ArrowRight" || e.key === "PageDown"){ go(1); e.preventDefault(); }
   if(e.key === "ArrowLeft" || e.key === "PageUp"){ go(-1); e.preventDefault(); }
