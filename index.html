@@ -113,19 +113,23 @@ h1.section,.section-title,.titlebox h1{text-shadow:0 1px 0 rgba(255,255,255,.95)
 /* --- extra-obscured background is applied per background layer in script --- */
 /* --- empty-then-fill table (slide 3) --- */
 .s3 .answer{display:none}
-/* --- slide 3: table matches title width, centered reveal button --- */
-.stack.s3{width:min(660px,100%);max-width:660px}
+/* --- slide 3: projector-scale comparison table --- */
+.stack.s3{width:min(900px,100%);max-width:900px}
 .s3 .panel{width:100%;max-width:100%}
 .s3col{width:100%;max-width:100%}
-.s3col>h1.section{margin:0 0 4px}
-.s3col .tablewrap{width:100%;margin:16px 0 18px}
+.s3col>h1.section{margin:0 0 18px}
+.s3-title{display:block;font-size:clamp(2.15rem,3.2vw,3.15rem);line-height:1.08;white-space:nowrap}
+.s3col .tablewrap{width:100%;margin:18px 0 22px;background:rgba(249,247,241,.44);border-color:rgba(75,74,120,.34);box-shadow:0 14px 38px rgba(42,38,31,.14)}
 .s3col .compare{min-width:0;width:100%;table-layout:fixed}
-.s3 .compare th,.s3 .compare td{padding:10px 18px;font-size:1.08rem}
+.s3 .compare th,.s3 .compare td{padding:15px 24px;font-size:clamp(1.45rem,2vw,1.8rem);line-height:1.15}
+.s3 .compare th{font-size:clamp(1.6rem,2.2vw,2rem);font-weight:bold;background:rgba(255,255,255,.58)}
+.s3 .compare td{background:rgba(255,255,255,.16)}
 .s3 .answer .tablewrap{width:100%;margin:16px 0}
 .s3 .answer .compare{min-width:0;width:100%}
-.s3 .reveal-btn{display:block;margin:20px auto 0}
+.s3 .reveal-btn{display:block;margin:22px auto 0;font-size:17px;padding:13px 26px}
 .shelltable th,.shelltable td{width:50%}
-.shelltable td{height:18px}
+.shelltable td{height:54px}
+@media(max-height:760px) and (min-width:841px){.s3-title{font-size:2rem}.s3 .compare th,.s3 .compare td{padding:10px 20px;font-size:1.35rem}.shelltable td{height:42px}.s3 .reveal-btn{margin-top:14px}}
 .cell-reveal{display:inline-block;opacity:0;transform:translateY(3px);animation:cellAppear .58s ease forwards;animation-delay:var(--d,0ms)}
 @keyframes cellAppear{to{opacity:1;transform:none}}
 /* --- clickable branch algorithm --- */
@@ -247,7 +251,7 @@ const SLIDES = [
     "ch": "principles",
     "layout": "left",
     "stackClass": "stack wide s3",
-    "body": "<div class='s3col'><h1 class='section'><span style='font-size:clamp(1.38rem,2vw,1.78rem);line-height:1.08;display:block;white-space:nowrap'>&ldquo;Liver Function Tests&rdquo; vs Liver <span class='hl' style='font-style:italic'>Function</span> Tests</span></h1><div class='tablewrap shell'><table class='compare shelltable'><tr><th>Integrity</th><th>Function</th></tr><tr><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>&nbsp;</td><td>&nbsp;</td></tr></table></div></div>",
+    "body": "<div class='s3col'><h1 class='section'><span class='s3-title'>&ldquo;Liver Function Tests&rdquo; vs Liver <span class='hl' style='font-style:italic'>Function</span> Tests</span></h1><div class='tablewrap shell'><table class='compare shelltable'><tr><th>Integrity</th><th>Function</th></tr><tr><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>&nbsp;</td><td>&nbsp;</td></tr></table></div></div>",
     "revealLabel": "Reveal the table",
     "reveal": "<div class='tablewrap'><table class='compare'><tr><th>Integrity</th><th>Function</th></tr><tr><td>AST</td><td>Albumin</td></tr><tr><td>ALT</td><td>Total protein</td></tr><tr><td>ALP</td><td>PT/INR</td></tr><tr><td>GGT</td><td>Total bilirubin</td></tr><tr><td>LDH</td><td></td></tr></table></div>",
     "image": "integrity-vs-function.jpg"
