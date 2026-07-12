@@ -148,6 +148,9 @@ h1.section,.section-title,.titlebox h1{text-shadow:0 1px 0 rgba(255,255,255,.95)
 .focus-answer .reveal-btn{font-size:15px;padding:13px 26px;box-shadow:0 5px 18px rgba(52,52,94,.18)}
 .focus-answer .answer{margin-top:24px;padding:18px 22px 20px;border:1px solid rgba(52,52,94,.28);border-left:6px solid var(--chapter);border-radius:8px;background:rgba(255,255,255,.58);backdrop-filter:blur(14px) saturate(1.12);-webkit-backdrop-filter:blur(14px) saturate(1.12);box-shadow:0 14px 34px rgba(42,38,31,.16)}
 .focus-answer .answer p{font-size:1.42rem;line-height:1.42;margin-bottom:13px}
+.no-accent-bar .qstem{padding-left:0;border-left:0}
+.no-accent-bar .answer{padding:0;border:0;background:transparent;box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none}
+.answer-no{display:inline-block;margin-right:.18em;padding:.04em .28em;border-radius:3px;background:var(--chapter);color:#fff;font-size:1.42em;font-weight:bold;line-height:1.05;text-shadow:none}
 .slide.right .stack.hepatocyte-stack{margin-right:clamp(22px,4vw,58px)}
 .slide.right .stack.alcohol-ratio-stack{margin-right:clamp(64px,8vw,140px)}
 /* --- extra-obscured background is applied per background layer in script --- */
@@ -315,10 +318,10 @@ const SLIDES = [
     "type": "text",
     "ch": "principles",
     "layout": "left",
-    "stackClass": "stack wide focus-answer",
+    "stackClass": "stack wide focus-answer no-accent-bar",
     "prompt": "<b>Does the level of enzyme elevation correlate with hepatic dysfunction?</b>",
     "revealLabel": "Reveal the answer",
-    "reveal": "<p>No. The height of the transaminases reflects how much hepatocyte injury is happening, not how well the liver is working.</p><p>Synthetic function is read from albumin, INR, and bilirubin. Enzymes in the thousands can occur with preserved function, and a near-normal panel can accompany a failing liver.</p>",
+    "reveal": "<p><strong class='answer-no'>No.</strong> The height of the transaminases reflects how much hepatocyte injury is happening, not how well the liver is working.</p><p>Synthetic function is read from albumin, INR, and bilirubin. Enzymes in the thousands can occur with preserved function, and a near-normal panel can accompany a failing liver.</p>",
     "image": "integrity-vs-function.jpg"
   },
   {
@@ -406,7 +409,7 @@ const SLIDES = [
       }
     ],
     "answerTitle": "Ischemic hepatitis",
-    "answer": "<ul class='keylist'><li>The <b>R factor</b> sorts injury into hepatocellular, cholestatic, or mixed.</li><li>When <b>AST and ALT are in the thousands</b>, think:<ul class='subbul'><li>Acute viral hepatitis</li><li>Acetaminophen toxicity</li><li>Ischemic hepatitis</li></ul></li><li><b>ALT:LDH &lt; 1.5</b> supports ischemic hepatitis.</li></ul>",
+    "answer": "<ul class='keylist'><li>The <b>R factor</b> sorts injury into hepatocellular, cholestatic, or mixed.</li><li>When <b>AST and ALT are in the thousands</b>, think:<ul class='subbul'><li>Acute viral hepatitis</li><li>Autoimmune hepatitis</li><li>Acetaminophen toxicity</li><li>Ischemic hepatitis</li></ul></li><li><b>ALT:LDH &lt; 1.5</b> supports ischemic hepatitis.</li></ul>",
     "image": "ischemic-hepatitis.jpg"
   },
   {
