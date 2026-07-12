@@ -1,0 +1,194 @@
+ACUTE LIVER INJURY — BACKGROUND IMAGE ART DIRECTION
+Interactive Case Deck · backgrounds for the self-contained HTML
+
+────────────────────────────────────────────────────────
+HOW TO USE
+────────────────────────────────────────────────────────
+• Generate one 16:9 image per entry below. File names must match exactly
+  (e.g. "ALI 06 Ischemic Hepatitis.png") so the deck picks them up.
+• Each entry is a complete, copy-paste prompt: paste the SCENE line, then
+  append the MASTER STYLE block, then append the NEGATIVE PROMPT.
+• The deck overlays text with a soft light wash, so every image needs a
+  calm, low-contrast "quiet zone" where the text sits. The COMPOSITION note
+  tells you which side to keep quiet for that specific slide.
+• Target 1920×1080 or larger. Consistent palette and lighting across all 21
+  images is what makes the deck look professionally produced — treat the
+  master style as fixed and vary only the scene.
+
+────────────────────────────────────────────────────────
+MASTER STYLE  (append to every prompt)
+────────────────────────────────────────────────────────
+Clinical editorial illustration in the spirit of a New England Journal of
+Medicine cover: delicate watercolor washes over fine architectural ink
+linework, restrained and intelligent, never cartoonish. Warm ivory paper
+texture with a faint tooth. Cohesive muted palette — slate blue-gray
+(#5d6e8c), soft ochre (#ae8845), dusty rose (#a45d65), sage (#61724c) — low
+saturation, gentle atmospheric depth, a single soft light source. Anatomy and
+lab equipment are accurate but understated. Generous negative space, elegant
+composition, print-quality detail, 16:9 widescreen. Full-bleed: the artwork and
+its paper texture fill the entire frame edge to edge, with the wash blending
+seamlessly into the margins — no borders, no framed panel, no inset rectangle,
+no hard vertical seam between a colored block and a blank area. Colors are soft
+but present and confident, not pale, bleached, or washed out; the deck dims each
+image slightly, so render it a touch richer than a pastel.
+
+────────────────────────────────────────────────────────
+NEGATIVE PROMPT  (append to every prompt)
+────────────────────────────────────────────────────────
+no text, no letters, no numbers, no labels, no captions, no words, no logos,
+no watermark, no UI, no charts with readable values, no signatures, no
+oversaturated colors, no neon, no harsh contrast, no clutter, no gore, no
+distorted anatomy, no stock-photo faces, no 3D-render look, no borders, no
+frame, no inset panel, no rectangular block, no hard vertical seam, no vignette
+bars, not washed out, not bleached, not overly pale.
+
+────────────────────────────────────────────────────────
+IMAGES
+────────────────────────────────────────────────────────
+
+ALI 01 Title.png
+SCENE: A reflective physician in profile studying faint, floating liver-
+chemistry notation and a translucent liver silhouette suspended in soft light,
+as if thinking through a pattern. Contemplative, authoritative opening image.
+COMPOSITION: Keep the RIGHT third quiet and open (title sits here); place the
+figure and detail on the LEFT.
+
+ALI 02 Principles.png
+SCENE: Two translucent vertical panels — one implying cellular injury (a quiet
+liver outline with fine cracked linework), the other implying synthetic
+function (serum, an albumin vial, a coagulation sample) — balanced side by
+side with a calm center.
+COMPOSITION: Keep the CENTER quiet and open (centered text); anchor visual
+interest to the far left and far right edges.
+
+ALI 03 Integrity vs Function.png
+SCENE: A clinical tray, softly lit, holding blood tubes, an albumin vial, a
+coagulation sample, and amber bilirubin-tinted serum, with an out-of-focus
+patient chart behind. Two conceptual groupings implied by arrangement.
+COMPOSITION: Keep the LEFT half quiet and open (left-aligned text); place the
+tray and detail on the RIGHT.
+
+ALI 04 Hepatocyte.png
+SCENE: An elegant single hepatocyte in cross-section — the sinusoidal blood-
+facing side rendered in cool slate, the canalicular bile-facing side in warm
+ochre-green — anatomy conveyed by color and form alone.
+COMPOSITION: Keep the RIGHT third quiet and open (right-aligned text); place
+the cell on the LEFT.
+
+ALI 05 Case Presentations.png
+SCENE: A row of anonymous lab reports fanned across a desk in soft hospital
+light, a clinician's hand comparing them, patterns implied but unreadable.
+Sets up the case series.
+COMPOSITION: Keep the CENTER quiet and open (centered title); keep interest
+low and toward the lower edge.
+
+ALI 06 Ischemic Hepatitis.png
+SCENE: A distant, blurred ICU monitor and the suggestion of a low-flow shock
+state, a pale blue-gray liver silhouette, and lab tubes in the near foreground.
+Cool, hypoperfused mood, not alarming.
+COMPOSITION: Keep the RIGHT two-thirds calm and low-contrast (lab table and
+answer sit here); place the motif in the LEFT third.
+
+ALI 07 Alcoholic Hepatitis.png
+SCENE: A hospital bedside bathed in warm jaundiced light, a clinician reviewing
+liver labs, with only the faintest bottle silhouette far in the background.
+Respectful and non-stigmatizing.
+COMPOSITION: Keep the RIGHT two-thirds calm; place figure/detail in the LEFT
+third.
+
+ALI 07b AST ALT Ratio.png
+SCENE: Two translucent enzyme molecules (transaminases) rendered in fine ink,
+each cradling a small pyridoxal-5-phosphate (vitamin B6) cofactor as a soft
+glowing point of light; one molecule's cofactor is faded and dim to imply
+depletion, the other still lit, with a faint balance-scale motif suggesting a
+2-to-1 tilt. A pale liver silhouette recedes behind. Quiet, conceptual,
+biochemical mood in warm ochre tones.
+COMPOSITION: Keep the RIGHT two-thirds calm and low-contrast (left-aligned text
+sits here); place the molecules and cofactor detail in the LEFT third.
+
+ALI 08 Acetaminophen Toxicity.png
+SCENE: An open medication bottle and blister packs beside a bedside lab tray, a
+liver silhouette washed with pale necrosis. Urgent in tone but never graphic.
+COMPOSITION: Keep the RIGHT two-thirds calm; place the bottle and tray in the
+LEFT third.
+
+ALI 09 Rhabdomyolysis.png
+SCENE: Skeletal muscle fibers rendered in fine ink, subtly juxtaposed with a
+kidney and liver outline and a single lab tube, an abstract sense of exertion
+or crush injury. Cool blue-gray watercolor.
+COMPOSITION: Keep the RIGHT two-thirds calm; place the muscle detail in the
+LEFT third.
+
+ALI 10 Alcohol Plus Acute Injury.png
+SCENE: Overlapping clues of chronic alcohol use and a superimposed acute injury
+— layered lab papers, a GGT tube, faint macrocytic red cells — arranged as if
+mid-investigation.
+COMPOSITION: Keep the RIGHT two-thirds calm; layer the clues in the LEFT third.
+
+ALI 11 Cholestatic Injury.png
+SCENE: The biliary tree and gallbladder in soft ink wash with yellow-green bile
+tones, an ultrasound probe suggested in the near foreground.
+COMPOSITION: Keep the RIGHT two-thirds calm; place the biliary anatomy in the
+LEFT third.
+
+ALI 12 Extrahepatic ALP.png
+SCENE: Trabecular bone detail of a femur head implying bone remodeling, with a
+single lab tube, the liver deliberately faded into the background to signal a
+non-hepatic source.
+COMPOSITION: Keep the RIGHT two-thirds calm; place the bone detail in the LEFT
+third.
+
+ALI 13 Alcohol Markers.png
+SCENE: Faint macrocytic red cells, a suggestion of low platelets, and a GGT lab
+tube on a quiet desk in muted warm tones — markers clustered, no bottle as the
+subject.
+COMPOSITION: Keep the RIGHT two-thirds calm; cluster the markers in the LEFT
+third.
+
+ALI 14 Infiltrative Liver Injury.png
+SCENE: Liver parenchyma carrying a delicate, speckled granulomatous/infiltrative
+texture, with a microscope slide implied in the foreground.
+COMPOSITION: Keep the RIGHT two-thirds calm; place the parenchyma in the LEFT
+third.
+
+ALI 15 Cirrhosis Pattern.png
+SCENE: A subtly nodular liver contour with portal venous branching and a small
+spleen silhouette, understated and chronic in mood.
+COMPOSITION: Keep the RIGHT two-thirds calm; place the liver in the LEFT third.
+
+ALI 16 AST ALT Cirrhosis.png
+SCENE: Two soft, unlabeled enzyme curves implied as translucent crossing lines
+behind a cirrhotic liver outline — academic, quiet, no readable graph.
+COMPOSITION: Keep the RIGHT two-thirds quiet (left-aligned text on this slide,
+but leave both flanks calm); place the liver and curves center-left.
+
+ALI 17 Chronic Liver Disease.png
+SCENE: A tidy clinic desk with organized workup tubes standing for the major
+chronic causes (viral, iron, autoimmune, genetic, metabolic), a pale liver
+silhouette behind.
+COMPOSITION: Keep the RIGHT two-thirds calm; arrange the tubes in the LEFT
+third.
+
+ALI 18 Hemolysis DIC.png
+SCENE: Fragmenting red blood cells in a subtle smear-like watercolor with a
+coagulation tube and platelet-poor plasma nearby. Serious but not graphic.
+COMPOSITION: Keep the RIGHT two-thirds calm; place the smear in the LEFT third.
+
+ALI 19 Acute Wilson Disease.png
+SCENE: A coppery iris-ring motif (Kayser–Fleischer suggestion) beside a liver
+silhouette, with a faint hemolysis smear — the sense of a must-not-miss
+emergency without any readable text.
+COMPOSITION: Keep the RIGHT two-thirds calm; place the iris and liver in the
+LEFT third.
+
+ALI 20 Diagnostic Algorithm.png
+SCENE: A clinician arranging blank lab-pattern cards into a branching diagnostic
+pathway on a desk under soft lamp light — decision-making made visual.
+COMPOSITION: Keep the LEFT half quiet and open (left-aligned summary); place
+the branching cards on the RIGHT.
+
+ALI 21 Thank You.png
+SCENE: A quiet clinician's desk or empty teaching room after the session, a
+faint liver outline and calm watercolor wash — a reflective closing image.
+COMPOSITION: Keep the RIGHT third quiet and open (closing text); place any
+detail on the LEFT.

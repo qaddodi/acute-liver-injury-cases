@@ -1,0 +1,1641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Interpreting the Liver Panel - Interactive Case Deck</title>
+<style>
+:root{--ink:#1d1b19;--muted:#463f34;--faint:#736d63;--paper:#f9f7f1;--line:#d8d0c2;--chapter:#4b4a78;--red:#a84545;--green:#3e7954;--gold:#ae8845}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:#bbb5aa;color:var(--ink);font-family:Georgia,"Times New Roman",Times,serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+.app{height:100dvh;width:100vw;background:#e9e3d7;display:flex;flex-direction:column;overflow:hidden}
+.topbar{height:59px;flex:0 0 59px;background:#fff;border-bottom:1px solid #dad6ce;display:flex;align-items:center;padding:0 28px;letter-spacing:.16em;text-transform:uppercase;position:relative;z-index:5}
+.case-title{font-size:19px;white-space:nowrap}.act-tag{margin-left:18px;padding-left:18px;border-left:1px solid #dfdbd2;color:#6f685f;font-size:12px}.close{margin-left:auto;border:0;background:transparent;font-size:25px;cursor:pointer;color:#111;width:36px;height:36px}
+.stage{position:relative;flex:1 1 auto;min-height:0;overflow:hidden;background:var(--bg,linear-gradient(120deg,#e8e1d3,#d5d1c8))}
+.bg-layer{position:absolute;inset:0;z-index:0;background-size:cover;background-position:center;background-repeat:no-repeat;opacity:0;filter:saturate(1.12) contrast(1.04) blur(0px) brightness(1);transition:opacity .36s cubic-bezier(.22,.61,.36,1),filter .36s cubic-bezier(.22,.61,.36,1);pointer-events:none;will-change:opacity,filter}
+.bg-layer.is-active{opacity:1}
+.stage:before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none}
+.stage.scrim-right:before{background:linear-gradient(270deg,rgba(249,247,241,.72),rgba(249,247,241,.46) 28%,rgba(249,247,241,.14) 52%,rgba(249,247,241,0) 68%)}
+.stage.scrim-left:before{background:linear-gradient(90deg,rgba(249,247,241,.72),rgba(249,247,241,.46) 28%,rgba(249,247,241,.14) 52%,rgba(249,247,241,0) 68%)}
+.stage.scrim-center:before{background:radial-gradient(72% 84% at 50% 50%,rgba(249,247,241,.58),rgba(249,247,241,.16) 56%,rgba(249,247,241,0) 76%)}
+.stage:after{content:"";position:absolute;inset:0;z-index:1;background:radial-gradient(125% 125% at 50% 42%,rgba(255,255,255,0) 58%,rgba(72,66,56,.13));pointer-events:none}
+.slide{position:absolute;inset:0;z-index:2;display:flex;align-items:flex-start;justify-content:flex-start;padding:44px clamp(34px,5vw,88px) 32px;overflow-y:auto;opacity:0;transform:translate3d(0,10px,0);transition:opacity .32s cubic-bezier(.22,.61,.36,1),transform .32s cubic-bezier(.22,.61,.36,1)}
+.slide.is-visible{opacity:1;transform:none}.slide.enter-next{transform:translate3d(20px,0,0)}.slide.enter-prev{transform:translate3d(-20px,0,0)}.slide.enter-next.is-visible,.slide.enter-prev.is-visible{transform:none}.slide.leaving-next{opacity:0;transform:translate3d(-20px,0,0);pointer-events:none;transition-duration:.2s}.slide.leaving-prev{opacity:0;transform:translate3d(20px,0,0);pointer-events:none;transition-duration:.2s}
+.slide.right{justify-content:flex-end}.slide.center{justify-content:center;align-items:center;text-align:center}.title-slide{align-items:center}.title-slide.right{justify-content:flex-end}
+.stack{width:min(760px,100%);max-width:760px}.stack.wide{width:min(900px,100%);max-width:900px}.case-stack{width:min(1080px,100%);max-width:1080px}.slide.right .stack,.slide.right .case-stack{margin-left:auto}
+.slide.right{padding-right:clamp(20px,3vw,44px)}
+.slide.center .stack,.slide.center .stack.wide{width:min(660px,100%);max-width:660px}
+.slide.right .stack,.slide.right .stack.wide{width:min(720px,100%);max-width:720px}
+.kicker,.titlebox,.panel,.case-grid,.section-title,.section-sub,.byline,.hint,.sub{text-shadow:0 1px 0 rgba(255,255,255,.82),0 0 12px rgba(250,248,241,.88),0 0 26px rgba(250,248,241,.66),0 0 46px rgba(250,248,241,.5)}
+.kicker{color:var(--chapter);font-weight:bold;letter-spacing:.20em;text-transform:uppercase;font-size:13.5px;margin:0 0 8px 1px}
+h1.section,.section-title{color:var(--chapter);font-weight:normal;font-size:clamp(2.7rem,5vw,4.15rem);line-height:1;margin:0 0 18px}.section-title{font-size:clamp(3.2rem,6vw,5rem)}
+.titlebox{max-width:min(680px,100%);overflow-wrap:break-word}.titlebox h1{font-size:clamp(3.4rem,7vw,6rem);line-height:.96;color:#34345e;font-weight:normal;margin:0 0 18px;overflow-wrap:break-word;word-break:normal;hyphens:none}.titlebox .sub,.section-sub{font-size:24px;line-height:1.52;color:var(--muted);max-width:760px}.byline{margin-top:24px;color:#777166;font-size:16px;font-style:italic}.hint{margin-top:28px;font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:#557b8d;font-weight:bold}
+h1.section,.section-title,.titlebox h1{text-shadow:0 1px 0 rgba(255,255,255,.95),0 0 12px rgba(249,247,241,.96),0 0 30px rgba(249,247,241,.86),0 0 58px rgba(249,247,241,.72)}
+@supports (color:color-mix(in srgb, red, white)){h1.section,.section-title,.titlebox h1{text-shadow:0 1px 0 rgba(255,255,255,.96),0 0 12px rgba(249,247,241,.96),0 0 26px color-mix(in srgb,var(--chapter) 22%,transparent),0 0 56px color-mix(in srgb,var(--chapter) 16%,rgba(249,247,241,.72))}}
+.panel{background:transparent;border:0;padding:0}.panel p{font-size:1.28rem;line-height:1.5;margin:0 0 15px}.panel .lead{font-size:1.44rem;line-height:1.46}.soft{color:var(--muted);font-style:italic}ul{margin:0 0 8px 24px;padding:0}li{font-size:1.19rem;line-height:1.45;margin:0 0 8px}.callout{margin-top:16px;padding:4px 0 4px 15px;border-left:3px solid var(--chapter)}.callout span{display:block;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--chapter);font-weight:bold;margin-bottom:5px}.callout p{font-size:1.125rem;margin:0;line-height:1.42}
+.tablewrap{display:block;position:relative;width:fit-content;max-width:100%;margin:16px auto 18px;border-radius:16px;overflow:hidden;background:rgba(249,247,241,.20);background-clip:padding-box;border:1px solid rgba(93,83,68,.30);backdrop-filter:blur(36px) saturate(1.2);-webkit-backdrop-filter:blur(36px) saturate(1.2)}
+.compare{position:relative;z-index:1;border-collapse:collapse;background:transparent;min-width:min(720px,100%);margin:0}.compare th,.compare td{border:1px solid rgba(93,83,68,.15);padding:16px 36px;font-size:1.3rem;text-align:center}.compare th{color:#34345e;background:rgba(255,255,255,.30)}
+.case-grid{display:grid;grid-template-columns:minmax(380px,480px) minmax(280px,1fr);gap:28px;align-items:start}.labwrap{position:relative;border-radius:16px;overflow:hidden;background:rgba(249,247,241,.20);background-clip:padding-box;border:1px solid rgba(93,83,68,.30);backdrop-filter:blur(36px) saturate(1.2);-webkit-backdrop-filter:blur(36px) saturate(1.2)}.labtable{position:relative;z-index:1;width:100%;border-collapse:collapse;background:transparent}.labtable td{border:1px solid rgba(93,83,68,.15);padding:11px 16px;font-size:1.42rem;text-align:center}.labtable td:last-child{font-variant-numeric:tabular-nums}.labtable tr.clue td{font-weight:bold;color:#111;background:rgba(255,255,255,.58)}.labcaption{font-size:16px;letter-spacing:.16em;text-transform:uppercase;color:#6f685f;margin:0 0 11px;font-weight:bold}
+.qstem{font-size:1.5rem;line-height:1.42;margin:0 0 16px}.answer{margin-top:16px;padding-top:15px;border-top:1px solid rgba(93,83,68,.22);animation:appear .32s}.answer .tag{display:inline-block;background:#34345e;color:#fff;border-radius:99px;padding:4px 11px;font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:10px;font-weight:bold}.answer h2{font-size:32px;color:#34345e;line-height:1.08;margin:0 0 12px;font-weight:normal}
+.reveal-btn{border:1px solid var(--chapter);background:rgba(255,255,255,.55);color:var(--chapter);font-family:inherit;font-size:14px;font-weight:bold;letter-spacing:.14em;text-transform:uppercase;padding:11px 22px;cursor:pointer;border-radius:2px;box-shadow:0 1px 2px rgba(52,52,94,.10);transition:background .18s ease,color .18s ease,box-shadow .18s ease,transform .12s ease}.reveal-btn:hover{background:var(--chapter);color:#fff;box-shadow:0 4px 14px rgba(52,52,94,.22);transform:translateY(-1px)}.reveal-btn:active{transform:translateY(0)}.reveal-btn:before{content:"\25B8";margin-right:9px;font-size:12px;opacity:.85}
+.nav{height:62px;flex:0 0 62px;background:#fff;border-top:1px solid #dad6ce;display:flex;align-items:center;gap:16px;padding:10px 22px}.navbtn{font-family:Georgia,"Times New Roman",Times,serif;background:#fff;border:1px solid #d4cec2;color:#34322f;text-transform:uppercase;letter-spacing:.12em;font-weight:bold;font-size:13px;padding:9px 18px;cursor:pointer;border-radius:3px;transition:background .15s ease,border-color .15s ease}.navbtn:hover:not(:disabled){background:#f8f5ee;border-color:#c8c1b3}.navbtn:disabled{opacity:.38;cursor:default}#reset{border-color:transparent;background:transparent;color:#928b81;padding:9px 10px}#reset:hover:not(:disabled){background:#f2eee6;color:#4a463f}.nav .divider{width:1px;height:24px;background:#e6e1d8;flex:0 0 auto}.progress{display:flex;align-items:center;gap:4px;min-width:0;flex:1 1 auto;height:22px}.seg{position:relative;height:8px;flex:1 1 0;min-width:7px;background:var(--segcol,#d3cbbd);opacity:.42;border-radius:4px;cursor:pointer;box-shadow:0 0 0 1px rgba(78,72,64,.16);transition:opacity .18s ease,height .18s ease}.seg:before{content:"";position:absolute;left:-4px;right:-4px;top:-9px;bottom:-9px}.seg.done{opacity:.92}.seg.current{opacity:1;height:16px;box-shadow:0 0 0 2px rgba(255,255,255,.95),0 1px 5px rgba(0,0,0,.3)}.seg:hover{opacity:1}.seg.unitstart{margin-left:12px}.seg[data-label]:hover:after{content:attr(data-label);position:absolute;bottom:22px;left:50%;transform:translateX(-50%);background:#2e2d2a;color:#fff;font-size:11.5px;font-weight:normal;letter-spacing:.02em;padding:5px 10px;border-radius:5px;white-space:nowrap;pointer-events:none;box-shadow:0 5px 16px rgba(0,0,0,.22);z-index:30}.counter{font-size:13px;border:1px solid #d4cec2;background:#fff;padding:6px 10px;min-width:78px;text-align:center;color:#403d38;font-variant-numeric:tabular-nums}.rightnav{display:flex;gap:9px}.navbtn .chev{opacity:.6;font-weight:normal}
+@keyframes appear{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@media(max-width:840px){.slide{padding:24px 20px}.act-tag{display:none}.case-grid,.branch-cols{grid-template-columns:1fr}.progress{display:none}.mobilecrumb{display:block}.titlebox h1{font-size:4rem}h1.section{font-size:2.7rem}.case-title{font-size:16px}}
+@media (prefers-reduced-motion:reduce){.slide,.bg-layer{transition:none!important;transform:none!important;filter:none!important}}
+@media print{body{background:white}.app{height:auto;overflow:visible}.nav,.topbar{display:none}.stage,.slide{position:static;height:auto;overflow:visible}.slide{page-break-after:always;opacity:1;transform:none;filter:none}.bg-layer,.stage:after{display:none}.reveal-btn{display:none!important}.answer[hidden]{display:block!important}}
+/* --- projector readability pass: larger type, with spacing reclaimed to preserve layouts --- */
+@media (min-width:841px){
+  .slide{padding-top:32px;padding-bottom:22px}
+  .kicker{font-size:15px;margin-bottom:6px}
+  .titlebox .sub,.section-sub{font-size:27px;line-height:1.42}
+  .byline{font-size:18px;margin-top:18px}.hint{font-size:15px;margin-top:20px}
+  .panel p{font-size:1.42rem;line-height:1.42;margin-bottom:12px}.panel .lead{font-size:1.58rem;line-height:1.38}
+  li,.keylist>li{font-size:1.31rem;line-height:1.38;margin-bottom:7px}
+  .subbul li{font-size:1.16rem;line-height:1.34;margin-bottom:4px}
+  .qstem{font-size:1.65rem;line-height:1.34;margin-bottom:12px}
+  .callout{margin-top:12px}.callout span,.pearl span,.redflag span,.formula span,.trivia span{font-size:12.5px}
+  .callout p{font-size:1.24rem;line-height:1.35}
+  .pearl,.redflag,.formula,.trivia{margin-top:10px;padding-top:8px;padding-bottom:8px}
+  .pearl p,.redflag p,.trivia p{font-size:18px;line-height:1.34}.formula p{font-size:19px;line-height:1.38}
+  .labcaption{font-size:18px;margin-bottom:8px}.labtable td{font-size:1.52rem;padding:9px 14px}
+  .compare th,.compare td{font-size:1.4rem;padding:13px 30px}.tablewrap{margin-top:12px;margin-bottom:14px}
+  .answer{margin-top:12px;padding-top:11px}.answer h2{font-size:35px;margin-bottom:9px}
+  .answer .keylist>li{font-size:1.27rem}
+  .reveal-btn{font-size:15.5px;padding:10px 20px}
+  .branch-lead{font-size:21px;line-height:1.4}.branch-q{font-size:24px;margin:7px 0 10px}
+  .branch-card{padding:12px 15px}.branch-card .path{font-size:13.5px}.branch-card h3{font-size:24px;margin-bottom:7px}.branch-card .tap{font-size:13px}
+  .s3 .compare th,.s3 .compare td{font-size:1.18rem;padding:8px 16px}.s3 .reveal-btn{margin-top:14px}
+  .focus-answer .answer p{font-size:1.5rem;line-height:1.34;margin-bottom:10px}
+}
+/* --- lab abnormal flags --- */
+.labtable td.val{white-space:nowrap;text-align:center;font-variant-numeric:tabular-nums}
+.labtable .num{font-variant-numeric:tabular-nums}
+.labtable .num.hi{color:#a6402f;font-weight:bold}
+.labtable .num.lo{color:#356089;font-weight:bold}
+.arrow{font-size:0.62em;line-height:1;margin-left:6px;vertical-align:middle}
+.arrow.hi{color:#a6402f}.arrow.lo{color:#356089}
+/* --- pearls, red flags, formula --- */
+.pearl,.redflag{margin-top:14px;padding:11px 15px;border-radius:2px;border-left:4px solid var(--gold);background:rgba(174,136,69,.10)}
+.pearl span,.redflag span{display:block;font-size:11px;letter-spacing:.16em;text-transform:uppercase;font-weight:bold;color:var(--gold);margin-bottom:5px}
+.pearl p,.redflag p{font-size:16.5px;line-height:1.44;margin:0;color:#2f2b26}
+.redflag{border-left-color:var(--red);background:rgba(168,69,69,.10)}
+.redflag span{color:var(--red)}
+.formula{margin:14px 0;padding:11px 15px;border-radius:2px;background:rgba(255,255,255,.42);border:1px solid rgba(93,83,68,.20)}
+.formula span{display:block;font-size:11px;letter-spacing:.16em;text-transform:uppercase;font-weight:bold;color:var(--chapter);margin-bottom:5px}
+.formula p{margin:0;font-size:17.5px;line-height:1.5;color:#2f2b26}.formula b{color:#34345e}
+/* --- key list (replaces bullet dots) --- */
+.keylist{list-style:none;margin:0 0 6px;padding:0}
+.keylist>li{position:relative;padding-left:22px;font-size:1.19rem;line-height:1.46;margin:0 0 10px}
+.keylist>li:before{content:"";position:absolute;left:2px;top:8px;width:7px;height:7px;background:var(--chapter);transform:rotate(45deg);opacity:.9}
+.keylist li b{color:#34345e}
+.answer .keylist>li{font-size:1.16rem}
+.hl{color:#a6402f;font-weight:bold;font-style:normal}
+/* --- sub-bullets --- */
+.subbul{list-style:none;margin:7px 0 2px;padding:0}
+.subbul li{position:relative;padding-left:16px;font-size:1.06rem;line-height:1.4;margin:0 0 5px}
+.subbul li:before{content:"";position:absolute;left:1px;top:11px;width:8px;height:1px;background:var(--muted);opacity:.75}
+.subbul li b{color:#34345e}
+/* --- trivia box --- */
+.trivia{margin-top:14px;padding:11px 15px;border-radius:2px;border-left:4px solid #5d6e8c;background:rgba(93,110,140,.10)}
+.trivia span{display:block;font-size:11px;letter-spacing:.16em;text-transform:uppercase;font-weight:bold;color:#5d6e8c;margin-bottom:5px}
+.trivia p{font-size:16.5px;line-height:1.44;margin:0;color:#2f2b26}
+/* --- narrow right-aligned stack (avoid art overlap) --- */
+.slide.right .stack.narrow,.slide.right .stack.wide.narrow{width:min(560px,100%);max-width:560px}
+/* --- slide-specific emphasis --- */
+.focus-answer .qstem{font-size:clamp(2.15rem,4.2vw,3.72rem);line-height:1.08;color:#34345e;margin:0 0 24px;padding:4px 0 10px 24px;border-left:6px solid var(--chapter);text-shadow:0 1px 0 rgba(255,255,255,.88),0 0 18px rgba(250,248,241,.88),0 0 42px rgba(250,248,241,.72)}
+.focus-answer .reveal-btn{font-size:15px;padding:13px 26px;box-shadow:0 5px 18px rgba(52,52,94,.18)}
+.focus-answer .answer{margin-top:24px;padding:18px 22px 20px;border:1px solid rgba(52,52,94,.28);border-left:6px solid var(--chapter);border-radius:8px;background:rgba(255,255,255,.58);backdrop-filter:blur(14px) saturate(1.12);-webkit-backdrop-filter:blur(14px) saturate(1.12);box-shadow:0 14px 34px rgba(42,38,31,.16)}
+.focus-answer .answer p{font-size:1.42rem;line-height:1.42;margin-bottom:13px}
+.slide.right .stack.hepatocyte-stack{margin-right:clamp(22px,4vw,58px)}
+.slide.right .stack.alcohol-ratio-stack{margin-right:clamp(64px,8vw,140px)}
+/* --- extra-obscured background is applied per background layer in script --- */
+/* --- empty-then-fill table (slide 3) --- */
+.s3 .answer{display:none}
+/* --- slide 3: table matches title width, centered reveal button --- */
+.stack.s3{width:min(660px,100%);max-width:660px}
+.s3 .panel{width:100%;max-width:100%}
+.s3col{width:100%;max-width:100%}
+.s3col>h1.section{margin:0 0 4px}
+.s3col .tablewrap{width:100%;margin:16px 0 18px}
+.s3col .compare{min-width:0;width:100%;table-layout:fixed}
+.s3 .compare th,.s3 .compare td{padding:10px 18px;font-size:1.08rem}
+.s3 .answer .tablewrap{width:100%;margin:16px 0}
+.s3 .answer .compare{min-width:0;width:100%}
+.s3 .reveal-btn{display:block;margin:20px auto 0}
+.shelltable th,.shelltable td{width:50%}
+.shelltable td{height:18px}
+.cell-reveal{display:inline-block;opacity:0;transform:translateY(3px);animation:cellAppear .58s ease forwards;animation-delay:var(--d,0ms)}
+@keyframes cellAppear{to{opacity:1;transform:none}}
+/* --- clickable branch algorithm --- */
+.branch{display:grid;gap:6px}
+.branch-lead{font-size:19.5px;line-height:1.5;margin:0 0 2px;color:var(--muted)}
+.branch-q{font-size:22px;font-weight:bold;color:#34345e;margin:10px 0 14px;line-height:1.35}
+.branch-cols{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.branch-card{background:rgba(255,255,255,.4);border:1px solid rgba(93,83,68,.2);padding:16px 18px;cursor:pointer;transition:background .15s ease,box-shadow .15s ease,transform .12s ease}
+.branch-card:hover{background:rgba(255,255,255,.62);box-shadow:0 3px 12px rgba(52,52,94,.12);transform:translateY(-1px)}
+.branch-card .path{font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:#6f685f;font-weight:bold;margin-bottom:6px}
+.branch-card h3{margin:0 0 9px;font-size:22px;color:#34345e;font-weight:normal}
+.branch-card .tap{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--chapter);font-weight:bold}
+.branch-card .tap:before{content:"\25B8";margin-right:7px;font-size:11px;opacity:.85}
+.branch-causes{margin-top:8px}
+.branch-causes[hidden]{display:none}
+.branch-card:focus-visible{outline:2px solid #34345e;outline-offset:2px}
+/* --- accessibility & focus --- */
+.reveal-btn:focus-visible,.navbtn:focus-visible,.seg:focus-visible,.close:focus-visible{outline:2px solid #34345e;outline-offset:2px}
+.seg:focus{outline:2px solid #34345e;outline-offset:2px}
+/* --- seamless swap between slides that share a lab table --- */
+.case-head,.panel{transition:opacity .2s ease}
+.case-head.swapping,.panel.swapping{opacity:0}
+.labtable td{transition:background .3s ease}
+.labtable tr.rowfocus td{background:rgba(174,136,69,.24);font-weight:bold;color:#1d1b19}
+/* --- mobile position crumb --- */
+.mobilecrumb{display:none;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:#6f685f;font-weight:bold;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1 1 auto;min-width:0}
+/* --- slide focus target (announced on navigation) --- */
+.slide:focus{outline:none}
+.slide:focus-visible{outline:none}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="topbar"><span class="case-title">Interpreting the Liver Panel</span><span class="act-tag" id="actTag"></span><button id="resetTop" class="close" title="Restart the deck" aria-label="Restart the deck">&#8635;</button></header>
+  <main class="stage" id="stage"><div class="bg-layer is-active" id="bgLayerA" aria-hidden="true"></div><div class="bg-layer" id="bgLayerB" aria-hidden="true"></div><section class="slide" id="slide" tabindex="-1" role="region" aria-label="Slide"></section></main>
+  <footer class="nav"><button class="navbtn" id="reset">Reset</button><div class="progress" id="progress"></div><span class="mobilecrumb" id="mobilecrumb"></span><span class="divider"></span><span class="counter" id="counter"></span><div class="rightnav"><button class="navbtn" id="prev"><span class="chev">&lsaquo;</span> Prev</button><button class="navbtn" id="next">Next <span class="chev">&rsaquo;</span></button></div></footer>
+</div>
+<script>
+const CHAPTERS = {
+  "title": {
+    "label": "Interpreting the Liver Panel",
+    "color": "#4b4a78",
+    "bg": "linear-gradient(120deg,#eee7d9,#d8d0c2)"
+  },
+  "principles": {
+    "label": "Principles",
+    "color": "#5d6e8c",
+    "bg": "linear-gradient(120deg,#ebe8df,#d7d7d0)"
+  },
+  "cases": {
+    "label": "Cases",
+    "color": "#777b97",
+    "bg": "linear-gradient(120deg,#eee7d9,#d9d1c3)"
+  },
+  "hepatocellular": {
+    "label": "Hepatocellular",
+    "color": "#a45d65",
+    "bg": "linear-gradient(120deg,#eee1dc,#d9c9c4)"
+  },
+  "alcohol": {
+    "label": "Alcohol Pattern",
+    "color": "#ae8845",
+    "bg": "linear-gradient(120deg,#eee6d4,#ded2b6)"
+  },
+  "muscle": {
+    "label": "Extrahepatic AST",
+    "color": "#547f92",
+    "bg": "linear-gradient(120deg,#e5eaeb,#d2dde0)"
+  },
+  "cholestatic": {
+    "label": "Cholestatic",
+    "color": "#61724c",
+    "bg": "linear-gradient(120deg,#e7e5d8,#d6dccd)"
+  },
+  "cirrhosis": {
+    "label": "Chronic Pattern",
+    "color": "#87699a",
+    "bg": "linear-gradient(120deg,#e9e3ec,#d9cede)"
+  },
+  "chronic": {
+    "label": "Chronic Workup",
+    "color": "#5d6e8c",
+    "bg": "linear-gradient(120deg,#e8e6dd,#d4d8d8)"
+  },
+  "wilson": {
+    "label": "Wilson Disease",
+    "color": "#a84545",
+    "bg": "linear-gradient(120deg,#eee0d9,#dcc8c0)"
+  },
+  "summary": {
+    "label": "Summary",
+    "color": "#6a6b71",
+    "bg": "linear-gradient(120deg,#e9e6df,#d4d1ca)"
+  }
+};
+const SLIDES = [
+  {
+    "type": "title",
+    "ch": "title",
+    "layout": "title-slide right",
+    "kicker": "Interactive Case Deck",
+    "title": "Interpreting the Liver Panel",
+    "subtitle": "A pattern-based approach to acute and chronic liver injury",
+    "byline": "Mohammad Almeqdadi, MD",
+    "hint": "Press Next or the right arrow to begin",
+    "image": "title.png"
+  },
+  {
+    "type": "text",
+    "ch": "principles",
+    "layout": "center",
+    "section": "Reading the liver panel",
+    "body": "<p class='lead'>A liver panel is a <b>pattern</b>, not one number to chase. Read the pattern and it often names the diagnosis for you.</p>",
+    "image": "core-principles.png"
+  },
+  {
+    "type": "text",
+    "ch": "principles",
+    "layout": "left",
+    "stackClass": "stack wide s3",
+    "body": "<div class='s3col'><h1 class='section'><span style='font-size:clamp(1.38rem,2vw,1.78rem);line-height:1.08;display:block;white-space:nowrap'>&ldquo;Liver Function Tests&rdquo; vs Liver <span class='hl' style='font-style:italic'>Function</span> Tests</span></h1><div class='tablewrap shell'><table class='compare shelltable'><tr><th>Integrity</th><th>Function</th></tr><tr><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>&nbsp;</td><td>&nbsp;</td></tr></table></div></div>",
+    "revealLabel": "Reveal the table",
+    "reveal": "<div class='tablewrap'><table class='compare'><tr><th>Integrity</th><th>Function</th></tr><tr><td>AST</td><td>Albumin</td></tr><tr><td>ALT</td><td>Total protein</td></tr><tr><td>ALP</td><td>PT/INR</td></tr><tr><td>GGT</td><td>Total bilirubin</td></tr><tr><td>LDH</td><td></td></tr></table></div>",
+    "image": "integrity-vs-function.png"
+  },
+  {
+    "type": "text",
+    "ch": "principles",
+    "layout": "left",
+    "stackClass": "stack wide focus-answer",
+    "prompt": "<b>Does the level of enzyme elevation correlate with hepatic dysfunction?</b>",
+    "revealLabel": "Reveal the answer",
+    "reveal": "<p>No. The height of the transaminases reflects how much hepatocyte injury is happening, not how well the liver is working.</p><p>Synthetic function is read from albumin, INR, and bilirubin. Enzymes in the thousands can occur with preserved function, and a near-normal panel can accompany a failing liver.</p>",
+    "image": "integrity-vs-function.png"
+  },
+  {
+    "type": "text",
+    "ch": "principles",
+    "layout": "right",
+    "stackClass": "stack wide narrow hepatocyte-stack",
+    "section": "Blood side and bile side",
+    "body": "<p class='lead'>The hepatocyte has two surfaces, and each releases a different set of enzymes.</p><ul class='keylist'><li><b>Sinusoidal (blood) side:</b> AST and ALT spill here when cells are injured.</li><li><b>Canalicular (bile) side:</b> ALP and GGT rise here when bile flow is obstructed.</li></ul>",
+    "prompt": "<b>When the enzymes climb, how do you tell hepatocellular injury from cholestatic, using just ALT and ALP?</b>",
+    "revealLabel": "Reveal the R factor",
+    "reveal": "<div class='formula'><span>R factor</span><p>R = (ALT &divide; ULN) &frasl; (ALP &divide; ULN)<br><b>&gt; 5</b> hepatocellular<br><b>&lt; 2</b> cholestatic<br><b>2 to 5</b> mixed</p></div>",
+    "image": "hepatocyte.png"
+  },
+  {
+    "type": "section",
+    "ch": "cases",
+    "layout": "center",
+    "section": "Case Presentations",
+    "subtitle": "For each panel, read the pattern and name the diagnosis before revealing it.",
+    "image": "case-presentations.png"
+  },
+  {
+    "type": "case",
+    "ch": "hepatocellular",
+    "layout": "right",
+    "caseNo": "Case 1",
+    "section": "Case 1",
+    "question": "Marked hepatocellular injury in the thousands. What pattern gives away the diagnosis?",
+    "labs": [
+      {
+        "name": "AST",
+        "value": "7,000",
+        "clue": true
+      },
+      {
+        "name": "ALT",
+        "value": "9,000",
+        "clue": true
+      },
+      {
+        "name": "ALP",
+        "value": "800",
+        "clue": false
+      },
+      {
+        "name": "GGT",
+        "value": "650",
+        "clue": false
+      },
+      {
+        "name": "LDH",
+        "value": "7,000",
+        "clue": true
+      },
+      {
+        "name": "Total bilirubin",
+        "value": "2.0",
+        "clue": false
+      },
+      {
+        "name": "Albumin",
+        "value": "3.0",
+        "clue": false
+      },
+      {
+        "name": "Total protein",
+        "value": "5.2",
+        "clue": false
+      },
+      {
+        "name": "INR",
+        "value": "1.2",
+        "clue": false
+      },
+      {
+        "name": "Platelets",
+        "value": "550,000",
+        "clue": false
+      },
+      {
+        "name": "MCV",
+        "value": "92",
+        "clue": false
+      }
+    ],
+    "answerTitle": "Ischemic hepatitis",
+    "answer": "<ul class='keylist'><li>The <b>R factor</b> sorts injury into hepatocellular, cholestatic, or mixed.</li><li>When <b>AST and ALT are in the thousands</b>, think:<ul class='subbul'><li>Acute viral hepatitis</li><li>Acetaminophen toxicity</li><li>Ischemic hepatitis</li></ul></li><li><b>ALT:LDH &lt; 1.5</b> supports ischemic hepatitis.</li></ul>",
+    "image": "ischemic-hepatitis.png"
+  },
+  {
+    "type": "case",
+    "ch": "alcohol",
+    "layout": "right",
+    "caseNo": "Case 2",
+    "section": "Case 2",
+    "question": "The transaminases are not in the thousands, but the patient is sick. What is the pattern?",
+    "labs": [
+      {
+        "name": "AST",
+        "value": "300",
+        "clue": true
+      },
+      {
+        "name": "ALT",
+        "value": "130",
+        "clue": true
+      },
+      {
+        "name": "ALP",
+        "value": "120",
+        "clue": false
+      },
+      {
+        "name": "GGT",
+        "value": "500",
+        "clue": true
+      },
+      {
+        "name": "LDH",
+        "value": "150",
+        "clue": false
+      },
+      {
+        "name": "Total bilirubin",
+        "value": "5.0",
+        "clue": true
+      },
+      {
+        "name": "Albumin",
+        "value": "4.0",
+        "clue": false
+      },
+      {
+        "name": "Total protein",
+        "value": "6.1",
+        "clue": false
+      },
+      {
+        "name": "INR",
+        "value": "2.5",
+        "clue": true
+      },
+      {
+        "name": "Platelets",
+        "value": "50,000",
+        "clue": true
+      },
+      {
+        "name": "MCV",
+        "value": "102",
+        "clue": true
+      }
+    ],
+    "answerTitle": "Alcoholic hepatitis",
+    "answer": "<ul class='keylist'><li><b>AST:ALT &gt; 2</b>, with AST in the <b>100s</b>, not the 1000s.</li><li>AST in the 1000s is not alcoholic hepatitis; look for another cause.</li><li><b>Bilirubin and INR</b> define severity.</li><li><b>MELD</b> is replacing the Maddrey discriminant function in many centers because it predicts mortality more accurately.</li></ul>",
+    "image": "alcoholic-hepatitis.png"
+  },
+  {
+    "type": "text",
+    "ch": "alcohol",
+    "layout": "right",
+    "stackClass": "stack wide narrow alcohol-ratio-stack",
+    "section": "Why AST:ALT > 2 in alcohol",
+    "body": "<p class='lead'>In alcoholic liver disease the ratio is classically greater than 2.</p>",
+    "prompt": "<b>Why is AST:ALT greater than 2 in alcohol use?</b>",
+    "revealLabel": "Reveal the mechanism",
+    "reveal": "<p>Both AST and ALT are transaminases, and both need <b>pyridoxal 5'-phosphate (PLP, the active form of vitamin B6)</b> as a cofactor to work.</p><p><b>ALT is about twice as dependent on PLP as AST.</b> Chronic alcohol use depletes B6, so ALT activity falls roughly twice as much as AST activity. The measured ALT drops, and the ratio settles around 2:1.</p><p>Mitochondrial AST released from alcohol-injured hepatocytes adds further to the AST side, pushing the ratio higher still.</p>",
+    "image": "ast-alt-ratio.png"
+  },
+  {
+    "type": "case",
+    "ch": "hepatocellular",
+    "layout": "right",
+    "caseNo": "Case 3",
+    "section": "Case 3",
+    "question": "ALT is over 10,000 and the INR is high. What do you do while the level is pending?",
+    "labs": [
+      {
+        "name": "AST",
+        "value": "9,000",
+        "clue": true
+      },
+      {
+        "name": "ALT",
+        "value": "12,000",
+        "clue": true
+      },
+      {
+        "name": "ALP",
+        "value": "1,000",
+        "clue": false
+      },
+      {
+        "name": "GGT",
+        "value": "900",
+        "clue": false
+      },
+      {
+        "name": "LDH",
+        "value": "5,000",
+        "clue": true
+      },
+      {
+        "name": "Total bilirubin",
+        "value": "5.0",
+        "clue": true
+      },
+      {
+        "name": "Albumin",
+        "value": "2.7",
+        "clue": true
+      },
+      {
+        "name": "Total protein",
+        "value": "4.9",
+        "clue": true
+      },
+      {
+        "name": "INR",
+        "value": "3.5",
+        "clue": true
+      },
+      {
+        "name": "Platelets",
+        "value": "210,000",
+        "clue": false
+      },
+      {
+        "name": "MCV",
+        "value": "85",
+        "clue": false
+      },
+      {
+        "name": "Lipase",
+        "value": "1,000",
+        "clue": true
+      }
+    ],
+    "answerTitle": "Acetaminophen toxicity",
+    "answer": "<ul class='keylist'><li><b>ALT &gt; 10,000</b> should trigger acetaminophen toxicity.</li><li>Massive necrosis can make ALT fall later, so a <b>normalizing ALT is not automatically reassuring</b>.</li><li><b>Do not delay NAC</b> when acetaminophen toxicity is suspected.</li><li>Use the <b>King's College Criteria</b> (arterial pH &lt; 7.30, or INR &gt; 6.5 with Cr &gt; 3.4 and grade III&ndash;IV encephalopathy) to trigger transplant evaluation &mdash; this, not MELD, is the acetaminophen-ALF standard.</li></ul>",
+    "trivia": "Acetaminophen toxicity is an uncommon but recognized cause of acute pancreatitis; the elevated lipase here fits, though lipase is also raised nonspecifically in critical illness.",
+    "image": "acetaminophen-toxicity.png"
+  },
+  {
+    "type": "case",
+    "ch": "muscle",
+    "layout": "right",
+    "caseNo": "Case 4",
+    "section": "Case 4",
+    "question": "AST is enormous, ALT is far lower, and LDH is high. Is this liver injury?",
+    "labs": [
+      {
+        "name": "AST",
+        "value": "10,000",
+        "clue": true
+      },
+      {
+        "name": "ALT",
+        "value": "850",
+        "clue": true
+      },
+      {
+        "name": "ALP",
+        "value": "80",
+        "clue": false
+      },
+      {
+        "name": "GGT",
+        "value": "35",
+        "clue": false
+      },
+      {
+        "name": "LDH",
+        "value": "5,000",
+        "clue": true
+      },
+      {
+        "name": "Total bilirubin",
+        "value": "1.0",
+        "clue": false
+      },
+      {
+        "name": "Albumin",
+        "value": "4.0",
+        "clue": false
+      },
+      {
+        "name": "Total protein",
+        "value": "6.2",
+        "clue": false
+      },
+      {
+        "name": "INR",
+        "value": "1.0",
+        "clue": false
+      },
+      {
+        "name": "Platelets",
+        "value": "190,000",
+        "clue": false
+      },
+      {
+        "name": "MCV",
+        "value": "80",
+        "clue": false
+      }
+    ],
+    "answerTitle": "Rhabdomyolysis",
+    "answer": "<ul class='keylist'><li><b>AST out of proportion to ALT</b> points away from the liver.</li><li>ALT can rise in severe rhabdomyolysis, but it stays <b>far below AST</b>.</li><li>Isolated AST elevation can come from:<ul class='subbul'><li>Skeletal muscle</li><li>Cardiac muscle</li><li>Red cells</li><li>Kidney</li></ul></li><li>Confirm the muscle source with <b>CK</b>.</li></ul>",
+    "image": "rhabdomyolysis.png"
+  },
+  {
+    "type": "case",
+    "ch": "alcohol",
+    "layout": "right",
+    "caseNo": "Case 5",
+    "section": "Case 5",
+    "question": "The patient drinks chronically and AST:ALT is above 2, but the enzymes are in the thousands. Does the alcohol pattern explain everything?",
+    "labs": [
+      {
+        "name": "AST",
+        "value": "6,000",
+        "clue": true
+      },
+      {
+        "name": "ALT",
+        "value": "2,500",
+        "clue": true
+      },
+      {
+        "name": "ALP",
+        "value": "400",
+        "clue": false
+      },
+      {
+        "name": "GGT",
+        "value": "550",
+        "clue": true
+      },
+      {
+        "name": "LDH",
+        "value": "700",
+        "clue": false
+      },
+      {
+        "name": "Total bilirubin",
+        "value": "1.2",
+        "clue": false
+      },
+      {
+        "name": "Albumin",
+        "value": "3.1",
+        "clue": true
+      },
+      {
+        "name": "Total protein",
+        "value": "5.6",
+        "clue": false
+      },
+      {
+        "name": "INR",
+        "value": "1.2",
+        "clue": false
+      },
+      {
+        "name": "Platelets",
+        "value": "50,000",
+        "clue": true
+      },
+      {
+        "name": "MCV",
+        "value": "102",
+        "clue": true
+      }
+    ],
+    "answerTitle": "Acute liver injury in chronic alcohol use",
+    "answer": "<ul class='keylist'><li><b>AST:ALT &gt; 2</b> fits alcohol, but values in the <b>thousands</b> are not alcoholic hepatitis.</li><li>Alcohol hallmarks:<ul class='subbul'><li>High GGT</li><li>High MCV</li><li>Low platelets</li><li>AST:ALT &gt; 2</li></ul></li><li>The alcohol pattern does not close the workup; keep looking for a second injury.</li></ul>",
+    "image": "alcohol-plus-acute-injury.png"
+  },
+  {
+    "type": "case",
+    "ch": "cholestatic",
+    "layout": "right",
+    "caseNo": "Case 6",
+    "section": "Case 6",
+    "question": "ALP and GGT dominate. What pattern is this, and why can the INR rise?",
+    "labs": [
+      {
+        "name": "AST",
+        "value": "50",
+        "clue": false
+      },
+      {
+        "name": "ALT",
+        "value": "60",
+        "clue": false
+      },
+      {
+        "name": "ALP",
+        "value": "500",
+        "clue": true
+      },
+      {
+        "name": "GGT",
+        "value": "700",
+        "clue": true
+      },
+      {
+        "name": "LDH",
+        "value": "180",
+        "clue": false
+      },
+      {
+        "name": "Total bilirubin",
+        "value": "4.5",
+        "clue": true
+      },
+      {
+        "name": "Albumin",
+        "value": "4.0",
+        "clue": false
+      },
+      {
+        "name": "Total protein",
+        "value": "6.2",
+        "clue": false
+      },
+      {
+        "name": "INR",
+        "value": "1.5",
+        "clue": true
+      },
+      {
+        "name": "Platelets",
+        "value": "190,000",
+        "clue": false
+      },
+      {
+        "name": "MCV",
+        "value": "80",
+        "clue": false
+      }
+    ],
+    "answerTitle": "Cholestatic injury",
+    "answer": "<ul class='keylist'><li><b>R factor &lt; 2</b>: mainly ALP and GGT.</li><li>Next step is a <b>right upper quadrant ultrasound</b> to look for ductal dilation.</li><li>A rising <b>INR</b> can come from vitamin K deficiency; give vitamin K IV, not PO.</li></ul>",
+    "image": "cholestatic-injury.png"
+  },
+  {
+    "type": "case",
+    "ch": "cholestatic",
+    "layout": "right",
+    "caseNo": "Case 6",
+    "section": "Case 6",
+    "focusLab": "INR",
+    "labs": [
+      { "name": "AST", "value": "50", "clue": false },
+      { "name": "ALT", "value": "60", "clue": false },
+      { "name": "ALP", "value": "500", "clue": true },
+      { "name": "GGT", "value": "700", "clue": true },
+      { "name": "LDH", "value": "180", "clue": false },
+      { "name": "Total bilirubin", "value": "4.5", "clue": true },
+      { "name": "Albumin", "value": "4.0", "clue": false },
+      { "name": "Total protein", "value": "6.2", "clue": false },
+      { "name": "INR", "value": "1.5", "clue": true },
+      { "name": "Platelets", "value": "190,000", "clue": false },
+      { "name": "MCV", "value": "80", "clue": false }
+    ],
+    "qstem": "Why is the INR high, and how would you correct it?",
+    "revealLabel": "Reveal",
+    "answer": "<p><b>Why is it high?</b> Cholestasis blocks bile flow. Without bile in the gut, the fat-soluble vitamins A, D, E, and K are not absorbed. Vitamin K deficiency impairs clotting factors II, VII, IX, and X, so the INR rises.</p><p><b>How do you correct it?</b> Give vitamin K <b>intravenously (slowly), not by mouth</b>. Oral vitamin K needs bile to be absorbed, and here no bile is reaching the gut, so a PO dose will not work. Subcutaneous dosing absorbs erratically and is not preferred.</p>",
+    "image": "cholestatic-injury.png"
+  },
+  {
+    "type": "branch",
+    "ch": "cholestatic",
+    "layout": "right",
+    "caseNo": "Case 6",
+    "section": "Cholestasis: find the block",
+    "intro": "An R factor &lt; 2 tells you the pattern is cholestatic. The next step is to image the ducts, with ultrasound first, then MRCP, CT, or ERCP as needed.",
+    "q": "Are the bile ducts dilated? Guess the causes on each side, then tap to check.",
+    "branches": [
+      {
+        "path": "Dilated ducts",
+        "title": "Extrahepatic cholestasis",
+        "causes": [
+          "<b>Choledocholithiasis</b> (common bile duct stone)",
+          "<b>Malignancy</b>: pancreatic head, cholangiocarcinoma, ampullary tumor",
+          "<b>Strictures</b>, including primary sclerosing cholangitis (PSC)",
+          "<b>Extrinsic compression</b> (nodes, pancreatic mass)"
+        ]
+      },
+      {
+        "path": "Non-dilated ducts",
+        "title": "Intrahepatic cholestasis",
+        "causes": [
+          "<b>Drug-induced liver injury</b>",
+          "<b>Sepsis</b>",
+          "<b>Primary biliary cholangitis (PBC)</b>",
+          "<b>Infiltrative disease</b> and TPN",
+          "<b>Intrahepatic cholestasis of pregnancy</b>"
+        ]
+      }
+    ],
+    "image": "cholestatic-injury.png"
+  },
+  {
+    "type": "case",
+    "ch": "cholestatic",
+    "layout": "right",
+    "caseNo": "Case 7",
+    "section": "Case 7",
+    "question": "ALP is high, but GGT is not. Where is the source?",
+    "labs": [
+      {
+        "name": "AST",
+        "value": "20",
+        "clue": false
+      },
+      {
+        "name": "ALT",
+        "value": "30",
+        "clue": false
+      },
+      {
+        "name": "ALP",
+        "value": "500",
+        "clue": true
+      },
+      {
+        "name": "GGT",
+        "value": "35",
+        "clue": true
+      },
+      {
+        "name": "LDH",
+        "value": "180",
+        "clue": false
+      },
+      {
+        "name": "Total bilirubin",
+        "value": "0.5",
+        "clue": false
+      },
+      {
+        "name": "Albumin",
+        "value": "4.0",
+        "clue": false
+      },
+      {
+        "name": "Total protein",
+        "value": "6.2",
+        "clue": false
+      },
+      {
+        "name": "INR",
+        "value": "1.0",
+        "clue": false
+      },
+      {
+        "name": "Platelets",
+        "value": "190,000",
+        "clue": false
+      },
+      {
+        "name": "MCV",
+        "value": "80",
+        "clue": false
+      }
+    ],
+    "answerTitle": "Extrahepatic ALP",
+    "answer": "<ul class='keylist'><li><b>ALP high with a normal GGT</b> means the source is not hepatic.</li><li>ALP isoenzymes come from:<ul class='subbul'><li><b>Hepatocytes</b> (canalicular side)</li><li><b>Cholangiocytes</b> (biliary tree)</li><li><b>Intestinal epithelium</b> (small bowel obstruction)</li><li><b>Kidney</b> (CKD/AKI)</li><li><b>Bone</b> (osteoblastic, not lytic)</li><li><b>Placenta</b> (1st and 3rd trimester)</li></ul></li></ul>",
+    "image": "extrahepatic-alp.png"
+  },
+  {
+    "type": "case",
+    "ch": "alcohol",
+    "layout": "right",
+    "caseNo": "Case 8",
+    "section": "Case 8",
+    "question": "The liver enzymes barely move, but several alcohol markers cluster together. What do they tell you?",
+    "labs": [
+      {
+        "name": "AST",
+        "value": "30",
+        "clue": false
+      },
+      {
+        "name": "ALT",
+        "value": "15",
+        "clue": false
+      },
+      {
+        "name": "ALP",
+        "value": "80",
+        "clue": false
+      },
+      {
+        "name": "GGT",
+        "value": "800",
+        "clue": true
+      },
+      {
+        "name": "LDH",
+        "value": "180",
+        "clue": false
+      },
+      {
+        "name": "Total bilirubin",
+        "value": "0.5",
+        "clue": false
+      },
+      {
+        "name": "Albumin",
+        "value": "4.0",
+        "clue": false
+      },
+      {
+        "name": "Total protein",
+        "value": "6.2",
+        "clue": false
+      },
+      {
+        "name": "INR",
+        "value": "1.0",
+        "clue": false
+      },
+      {
+        "name": "Platelets",
+        "value": "100,000",
+        "clue": true
+      },
+      {
+        "name": "MCV",
+        "value": "102",
+        "clue": true
+      }
+    ],
+    "answerTitle": "Alcohol drinking pattern",
+    "answer": "<ul class='keylist'><li>Drinking hallmarks:<ul class='subbul'><li>High GGT</li><li>AST:ALT &gt; 2</li><li>High MCV</li><li>Low platelets</li><li>High IgA</li></ul></li><li><b>GGT rises with alcohol</b> even without major liver injury.</li></ul>",
+    "image": "alcohol-markers.png"
+  },
+  {
+    "type": "case",
+    "ch": "cholestatic",
+    "layout": "right",
+    "caseNo": "Case 9",
+    "section": "Case 9",
+    "question": "ALP and GGT are high, but bilirubin is normal. What bucket does this suggest?",
+    "labs": [
+      {
+        "name": "AST",
+        "value": "50",
+        "clue": false
+      },
+      {
+        "name": "ALT",
+        "value": "60",
+        "clue": false
+      },
+      {
+        "name": "ALP",
+        "value": "1,000",
+        "clue": true
+      },
+      {
+        "name": "GGT",
+        "value": "700",
+        "clue": true
+      },
+      {
+        "name": "LDH",
+        "value": "180",
+        "clue": false
+      },
+      {
+        "name": "Total bilirubin",
+        "value": "0.5",
+        "clue": true
+      },
+      {
+        "name": "Albumin",
+        "value": "4.0",
+        "clue": false
+      },
+      {
+        "name": "Total protein",
+        "value": "6.2",
+        "clue": false
+      },
+      {
+        "name": "INR",
+        "value": "1.0",
+        "clue": false
+      },
+      {
+        "name": "Platelets",
+        "value": "190,000",
+        "clue": false
+      },
+      {
+        "name": "MCV",
+        "value": "80",
+        "clue": false
+      }
+    ],
+    "answerTitle": "Infiltrative liver injury",
+    "answer": "<ul class='keylist'><li><b>ALP and GGT up with a normal bilirubin</b> suggests an infiltrative pattern.</li><li>Causes:<ul class='subbul'><li>Sarcoidosis</li><li>Syphilis</li><li>Drug-induced injury</li><li>Early PBC</li><li>Infiltrating carcinoma</li></ul></li></ul>",
+    "image": "infiltrative-liver-injury.png"
+  },
+  {
+    "type": "case",
+    "ch": "cirrhosis",
+    "layout": "right",
+    "caseNo": "Case 10",
+    "section": "Case 10",
+    "question": "The enzymes are not dramatic. Which chronic pattern matters most?",
+    "labs": [
+      {
+        "name": "AST",
+        "value": "30",
+        "clue": true
+      },
+      {
+        "name": "ALT",
+        "value": "12",
+        "clue": true
+      },
+      {
+        "name": "ALP",
+        "value": "80",
+        "clue": false
+      },
+      {
+        "name": "GGT",
+        "value": "35",
+        "clue": false
+      },
+      {
+        "name": "LDH",
+        "value": "180",
+        "clue": false
+      },
+      {
+        "name": "Total bilirubin",
+        "value": "1.5",
+        "clue": true
+      },
+      {
+        "name": "Albumin",
+        "value": "3.3",
+        "clue": true
+      },
+      {
+        "name": "Total protein",
+        "value": "4.8",
+        "clue": true
+      },
+      {
+        "name": "INR",
+        "value": "1.3",
+        "clue": true
+      },
+      {
+        "name": "Platelets",
+        "value": "140,000",
+        "clue": true
+      },
+      {
+        "name": "MCV",
+        "value": "90",
+        "clue": false
+      }
+    ],
+    "answerTitle": "Cirrhosis",
+    "answer": "<ul class='keylist'><li><b>AST &gt; ALT</b> can be a cirrhosis clue even when values look near normal.</li><li>Markers of chronic dysfunction and portal hypertension:<ul class='subbul'><li>Low albumin</li><li>High INR</li><li>High bilirubin</li><li>Low platelets</li></ul></li><li><b>Low platelets</b> are especially useful; they often reflect portal hypertension.</li></ul>",
+    "image": "cirrhosis-pattern.png"
+  },
+  {
+    "type": "blank",
+    "ch": "cirrhosis",
+    "layout": "plain",
+    "image": "ast-alt-cirrhosis.png"
+  },
+  {
+    "type": "case",
+    "ch": "chronic",
+    "layout": "right",
+    "caseNo": "Case 11",
+    "section": "Case 11",
+    "question": "Mild ALT-predominant injury. What workup bucket opens?",
+    "labs": [
+      {
+        "name": "AST",
+        "value": "30",
+        "clue": false
+      },
+      {
+        "name": "ALT",
+        "value": "60",
+        "clue": true
+      },
+      {
+        "name": "ALP",
+        "value": "100",
+        "clue": false
+      },
+      {
+        "name": "GGT",
+        "value": "35",
+        "clue": false
+      },
+      {
+        "name": "LDH",
+        "value": "180",
+        "clue": false
+      },
+      {
+        "name": "Total bilirubin",
+        "value": "1.0",
+        "clue": false
+      },
+      {
+        "name": "Albumin",
+        "value": "4.0",
+        "clue": false
+      },
+      {
+        "name": "Total protein",
+        "value": "6.0",
+        "clue": false
+      },
+      {
+        "name": "INR",
+        "value": "1.0",
+        "clue": false
+      },
+      {
+        "name": "Platelets",
+        "value": "250,000",
+        "clue": false
+      },
+      {
+        "name": "MCV",
+        "value": "80",
+        "clue": false
+      }
+    ],
+    "answerTitle": "Chronic liver disease",
+    "answer": "<ul class='keylist'><li>Mild elevation with <b>ALT &gt; AST</b>.</li><li>Work up:<ul class='subbul'><li>Hepatitis B and C</li><li>Hemochromatosis</li><li>Autoimmune hepatitis</li><li>A1AT deficiency</li><li>Wilson disease</li><li>MASLD</li></ul></li><li>MASLD is common but remains a <b>diagnosis of exclusion</b>.</li></ul>",
+    "image": "chronic-liver-disease.png"
+  },
+  {
+    "type": "case",
+    "ch": "muscle",
+    "layout": "right",
+    "caseNo": "Case 12",
+    "section": "Case 12",
+    "question": "AST is high without ALT elevation, and bilirubin/LDH/MCV are high. What process fits?",
+    "labs": [
+      {
+        "name": "AST",
+        "value": "400",
+        "clue": true
+      },
+      {
+        "name": "ALT",
+        "value": "30",
+        "clue": true
+      },
+      {
+        "name": "ALP",
+        "value": "90",
+        "clue": false
+      },
+      {
+        "name": "GGT",
+        "value": "35",
+        "clue": false
+      },
+      {
+        "name": "LDH",
+        "value": "1,000",
+        "clue": true
+      },
+      {
+        "name": "Total bilirubin",
+        "value": "6.0",
+        "clue": true
+      },
+      {
+        "name": "Albumin",
+        "value": "4.0",
+        "clue": false
+      },
+      {
+        "name": "Total protein",
+        "value": "6.0",
+        "clue": false
+      },
+      {
+        "name": "INR",
+        "value": "3.0",
+        "clue": true
+      },
+      {
+        "name": "Platelets",
+        "value": "50,000",
+        "clue": true
+      },
+      {
+        "name": "MCV",
+        "value": "110",
+        "clue": true
+      }
+    ],
+    "answerTitle": "Hemolysis with possible DIC",
+    "answer": "<ul class='keylist'><li><b>High AST with a normal ALT</b> indicates an extrahepatic source.</li><li>Findings that support hemolysis:<ul class='subbul'><li>High LDH</li><li>High bilirubin</li><li>High MCV</li></ul></li><li><b>High INR with low platelets</b> raises concern for DIC.</li></ul>",
+    "image": "hemolysis-dic.png"
+  },
+  {
+    "type": "case",
+    "ch": "wilson",
+    "layout": "right",
+    "caseNo": "Case 13",
+    "section": "Case 13",
+    "obscure": true,
+    "question": "Very high bilirubin, very low ALP, hemolysis markers, and liver failure. What is the diagnosis?",
+    "labs": [
+      {
+        "name": "AST",
+        "value": "800",
+        "clue": true
+      },
+      {
+        "name": "ALT",
+        "value": "300",
+        "clue": true
+      },
+      {
+        "name": "ALP",
+        "value": "15",
+        "clue": true
+      },
+      {
+        "name": "GGT",
+        "value": "200",
+        "clue": false
+      },
+      {
+        "name": "LDH",
+        "value": "500",
+        "clue": true
+      },
+      {
+        "name": "Total bilirubin",
+        "value": "40.0",
+        "clue": true
+      },
+      {
+        "name": "Albumin",
+        "value": "2.1",
+        "clue": true
+      },
+      {
+        "name": "Total protein",
+        "value": "4.8",
+        "clue": true
+      },
+      {
+        "name": "INR",
+        "value": "3.5",
+        "clue": true
+      },
+      {
+        "name": "Platelets",
+        "value": "100,000",
+        "clue": true
+      },
+      {
+        "name": "MCV",
+        "value": "110",
+        "clue": true
+      }
+    ],
+    "answerTitle": "Acute Wilson disease",
+    "answer": "<ul class='keylist'><li><b>AST:ALT &gt; 2.2</b>.</li><li><b>ALP:bilirubin &lt; 4</b>: bilirubin is out of proportion to a low ALP.</li><li>Supportive findings:<ul class='subbul'><li>Coombs-negative hemolytic anemia</li><li>High bilirubin</li><li>High LDH</li><li>High MCV</li><li>High INR</li></ul></li><li>This is a <b>transplant emergency</b>.</li></ul>",
+    "image": "acute-wilson-disease.png"
+  },
+  {
+    "type": "blank",
+    "ch": "summary",
+    "layout": "plain",
+    "fit": "contain",
+    "image": "diagnostic-algorithm.png"
+  },
+  {
+    "type": "end",
+    "ch": "summary",
+    "layout": "title-slide right",
+    "title": "Thank you.",
+    "subtitle": "The goal is not to memorize every lab, but to read the pattern well enough to choose the next step.",
+    "hint": "Press Reset to run the cases again",
+    "image": "final-reveal.png"
+  }
+];
+const BACKGROUND_IMAGE_BASE_PATH = "";
+const PAPER_FALLBACK = "linear-gradient(120deg,rgba(249,247,241,.88),rgba(231,225,214,.74)), radial-gradient(80% 70% at 18% 60%,rgba(84,127,146,.18),transparent 62%), radial-gradient(65% 70% at 85% 28%,rgba(174,136,69,.16),transparent 64%)";
+const stage = document.getElementById("stage");
+const slideEl = document.getElementById("slide");
+const counter = document.getElementById("counter");
+const progress = document.getElementById("progress");
+const actTag = document.getElementById("actTag");
+const bgA = document.getElementById("bgLayerA");
+const bgB = document.getElementById("bgLayerB");
+let activeBg = bgA, inactiveBg = bgB, idx = 0, isTransitioning = false, timer = null;
+let currentBgKey = "", currentBgVisualKey = "";
+const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const SLIDE_LEAVE_MS = 220;
+function meta(s){ return CHAPTERS[s.ch] || CHAPTERS.title; }
+function esc(v){ return String(v ?? "").replace(/[&<>"']/g, ch => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[ch])); }
+function shouldHideCaseTell(s){ return s.type === "case" && !!s.answerTitle && !s.done; }
+function bgFilterFor(s){
+  if(shouldHideCaseTell(s) && s.obscure) return "saturate(.5) contrast(.98) blur(42px) brightness(.66)";
+  if(shouldHideCaseTell(s)) return "saturate(1.02) contrast(1.02) blur(18px) brightness(.86)";
+  return "saturate(1.12) contrast(1.04) blur(0px) brightness(1)";
+}
+function bgStateFor(s,c){
+  const image = s.image ? BACKGROUND_IMAGE_BASE_PATH + s.image : "";
+  return {
+    image,
+    bg: c.bg,
+    size: (image && s.fit === "contain") ? "contain, cover" : "cover",
+    position: s.imagePos || "center center",
+    filter: bgFilterFor(s)
+  };
+}
+function bgKey(state){ return `${state.image}|${state.size}|${state.position}|${state.filter}`; }
+function bgVisualKey(state){ return `${state.image}|${state.size}|${state.position}`; }
+function paintBg(layer,state){
+  layer.style.backgroundImage = state.image ? `url("${state.image}"), ${PAPER_FALLBACK}` : PAPER_FALLBACK;
+  layer.style.backgroundSize = state.size;
+  layer.style.backgroundPosition = state.position;
+  layer.style.filter = state.filter;
+}
+function updateTableBlurLayers(){}
+function setBg(s,c,instant=false){
+  stage.style.setProperty("--bg", c.bg);
+  const state = bgStateFor(s,c);
+  const key = bgKey(state);
+  const visualKey = bgVisualKey(state);
+  if(key === currentBgKey && !instant) return;
+  if(!instant && !reduceMotion && visualKey === currentBgVisualKey){
+    currentBgKey = key;
+    activeBg.style.filter = state.filter;
+    return;
+  }
+  currentBgKey = key;
+  currentBgVisualKey = visualKey;
+  const layer = instant || reduceMotion ? activeBg : inactiveBg;
+  paintBg(layer,state);
+  if(instant || reduceMotion){
+    activeBg.classList.add("is-active");
+    inactiveBg.classList.remove("is-active");
+    return;
+  }
+  inactiveBg.classList.remove("is-active");
+  inactiveBg.offsetHeight;
+  requestAnimationFrame(() => {
+    inactiveBg.classList.add("is-active");
+    activeBg.classList.remove("is-active");
+    const old = activeBg; activeBg = inactiveBg; inactiveBg = old;
+  });
+}
+function head(s){ return `${s.kicker ? `<div class="kicker">${esc(s.kicker)}</div>` : ""}${s.sectionHtml ? `<h1 class="section">${s.sectionHtml}</h1>` : s.section ? `<h1 class="section">${esc(s.section)}</h1>` : ""}`; }
+function titleHtml(s){ return `<div class="titlebox">${s.kicker ? `<div class="kicker">${esc(s.kicker)}</div>` : ""}<h1>${esc(s.title)}</h1>${s.subtitle ? `<p class="sub">${esc(s.subtitle)}</p>` : ""}${s.byline ? `<p class="byline">${esc(s.byline)}</p>` : ""}${s.hint ? `<p class="hint">${esc(s.hint)}</p>` : ""}</div>`; }
+function textHtml(s){
+  const sw = s.stackClass || "stack wide";
+  if(s.prompt || s.reveal){
+    const q = s.prompt ? `<p class="qstem">${s.prompt}</p>` : "";
+    const rv = s.reveal ? `<button class="reveal-btn" data-act="reveal" aria-expanded="false">${esc(s.revealLabel || "Reveal answer")}</button><div class="answer" data-answer hidden aria-live="polite">${s.reveal}</div>` : "";
+    return `<div class="${sw}">${head(s)}<div class="panel">${s.body || ""}${q}${rv}</div></div>`;
+  }
+  return `<div class="${sw}">${head(s)}<div class="panel">${s.body}</div></div>`;
+}
+function sectionHtml(s){ return `<div class="stack"><div class="section-title">${esc(s.section)}</div><p class="section-sub">${esc(s.subtitle || "")}</p></div>`; }
+const LAB_REF = {"AST":[10,40],"ALT":[7,56],"ALP":[44,147],"GGT":[8,61],"LDH":[140,280],"Total bilirubin":[0.1,1.2],"Albumin":[3.5,5.0],"Total protein":[6.0,8.3],"INR":[0.8,1.1],"Platelets":[150000,400000],"MCV":[80,100],"Lipase":[10,140]};
+function labDir(name,value){
+  const r = LAB_REF[name]; if(!r) return 0;
+  const n = parseFloat(String(value).replace(/,/g,"")); if(isNaN(n)) return 0;
+  if(n > r[1]) return 1; if(n < r[0]) return -1; return 0;
+}
+const PEARLS = {
+  "Ischemic hepatitis": {
+    pearl: "Transaminases in ischemic hepatitis peak fast (24 to 48 hours after the insult) and fall fast once perfusion is restored. Early LDH elevation with ALT:LDH < 1.5 helps separate it from acute viral hepatitis.",
+    redFlag: "Find and treat the hemodynamic cause: shock, arrhythmia, decompensated heart failure, or hypoxemia. Fixing perfusion is the therapy."
+  },
+  "Alcoholic hepatitis": {
+    pearl: "AST rarely exceeds about 300 to 400 U/L in pure alcoholic hepatitis, and AST:ALT is usually > 2. Values in the thousands demand a second explanation such as acetaminophen, ischemia, or viral hepatitis.",
+    redFlag: "Grade severity with MELD (or Maddrey discriminant function >= 32). Consider corticosteroids in severe disease, then reassess at day 7 with the Lille score."
+  },
+  "Acetaminophen toxicity": {
+    pearl: "A falling ALT can mean recovery or burnout necrosis, so interpret the trend against INR, lactate, and pH, never in isolation.",
+    redFlag: "Give NAC empirically whenever acetaminophen toxicity is plausible; do not wait for the level, and treat even a low level in late or staggered ingestions. Apply the King's College Criteria (arterial pH < 7.30, or INR > 6.5 with creatinine > 3.4 mg/dL and grade III to IV encephalopathy) to trigger transplant evaluation."
+  },
+  "Rhabdomyolysis": {
+    pearl: "AST is not liver-specific: skeletal and cardiac muscle, red cells, and kidney all release it. A large AST with a much smaller ALT points away from the liver; confirm the muscle source with CK."
+  },
+  "Acute liver injury in chronic alcohol use": {
+    pearl: "The alcohol signature (AST:ALT > 2, high GGT and MCV, low platelets) can mask a second, acute injury. Transaminases in the thousands are never just alcoholic hepatitis, so keep working the differential."
+  },
+  "Cholestatic injury": {
+    pearl: "Confirm the cholestatic pattern with R factor < 2, then order a right upper quadrant ultrasound first to separate obstructive (dilated ducts) from non-obstructive causes."
+  },
+  "Extrahepatic ALP": {
+    pearl: "An isolated high ALP with a normal GGT is not hepatic. Fractionate: bone (growth, Paget, osteoblastic metastases), gut, or placenta (pregnancy). Bone ALP tracks osteoblastic, not lytic, activity."
+  },
+  "Alcohol drinking pattern": {
+    pearl: "GGT is sensitive but not specific; it rises with alcohol, enzyme-inducing drugs, and biliary disease. Read it alongside MCV, platelets, AST:ALT, and IgA rather than on its own."
+  },
+  "Infiltrative liver injury": {
+    pearl: "ALP and GGT up with a normal bilirubin is the infiltrative signature; think granulomatous disease (sarcoid, TB), infiltrating malignancy, early PBC, or drug effect. Cross-sectional imaging with or without biopsy is the next step."
+  },
+  "Cirrhosis": {
+    pearl: "In cirrhosis the enzymes may be near normal; the diagnosis lives in the synthetic and portal-hypertension markers: low albumin, high INR, high bilirubin, and low platelets. Confirm with imaging and elastography."
+  },
+  "Chronic liver disease": {
+    pearl: "Mild, chronic, ALT-predominant elevation earns a full workup: viral B and C serologies, iron studies, autoimmune panel (ANA/ASMA, IgG), A1AT, ceruloplasmin, and metabolic risk. MASLD is common but remains a diagnosis of exclusion."
+  },
+  "Hemolysis with possible DIC": {
+    pearl: "AST without ALT, plus high LDH, indirect hyperbilirubinemia, and low haptoglobin, is hemolysis until proven otherwise. Add low platelets and a high INR and think DIC, then hunt the trigger."
+  },
+  "Acute Wilson disease": {
+    pearl: "The characteristically low ALP reflects copper displacing zinc from the enzyme. Work up with ceruloplasmin, 24-hour urinary copper, and a slit-lamp exam for Kayser-Fleischer rings.",
+    redFlag: "Two bedside ratios flag fulminant Wilson disease: AST:ALT > 2.2 and ALP:total bilirubin < 4, paired with Coombs-negative hemolytic anemia. This is a transplant emergency, so refer immediately."
+  }
+};
+function labTableHtml(s){
+  const rows = s.labs.map(r => {
+    const d = labDir(r.name, r.value);
+    const cls = d > 0 ? "hi" : d < 0 ? "lo" : "";
+    const arrow = d > 0 ? '<span class="arrow hi" aria-label="above range">▲</span>' : d < 0 ? '<span class="arrow lo" aria-label="below range">▼</span>' : "";
+    return `<tr class="${r.clue ? "clue" : ""}"><td>${esc(r.name)}</td><td class="val"><span class="num ${cls}">${esc(r.value)}</span>${arrow}</td></tr>`;
+  }).join("");
+  return `<div class="labcaption">${esc(s.caseNo)} &middot; lab panel</div><div class="labwrap"><table class="labtable">${rows}</table></div>`;
+}
+function panelHtml(s){
+  const p = PEARLS[s.answerTitle] || {};
+  const tr = s.trivia ? `<div class="trivia"><span>Trivia</span><p>${s.trivia}</p></div>` : "";
+  const rf = p.redFlag ? `<div class="redflag"><span>Red flag</span><p>${p.redFlag}</p></div>` : "";
+  const pe = p.pearl ? `<div class="pearl"><span>Clinical pearl</span><p>${p.pearl}</p></div>` : "";
+  const qstem = s.qstem || "What's the most likely diagnosis?";
+  const revealLabel = esc(s.revealLabel || "Reveal diagnosis");
+  const answerInner = s.answerTitle
+    ? `<span class="tag">Most likely diagnosis</span><h2>${esc(s.answerTitle)}</h2>${s.answer}${tr}${rf}${pe}`
+    : `${s.answer}${tr}`;
+  return `<p class="qstem">${qstem}</p><button class="reveal-btn" data-act="reveal" aria-expanded="false">${revealLabel}</button><div class="answer" data-answer hidden aria-live="polite">${answerInner}</div>`;
+}
+function caseHtml(s){
+  return `<div class="case-stack"><div class="case-head">${head(s)}</div><div class="case-grid"><div class="labcol">${labTableHtml(s)}</div><div class="panel">${panelHtml(s)}</div></div></div>`;
+}
+function branchHtml(s){
+  const cards = s.branches.map(b => `<div class="branch-card" data-branch tabindex="0" role="button" aria-expanded="false"><div class="path">${esc(b.path)}</div><h3>${esc(b.title)}</h3><div class="tap">Tap to reveal causes</div><div class="branch-causes" hidden><ul class="keylist">${b.causes.map(c => `<li>${c}</li>`).join("")}</ul></div></div>`).join("");
+  return `<div class="stack wide">${head(s)}<div class="branch"><p class="branch-lead">${s.intro}</p><p class="branch-q">${s.q}</p><div class="branch-cols">${cards}</div></div></div>`;
+}
+function htmlFor(s){
+  if(s.type === "title" || s.type === "end") return titleHtml(s);
+  if(s.type === "text") return textHtml(s);
+  if(s.type === "section") return sectionHtml(s);
+  if(s.type === "case") return caseHtml(s);
+  if(s.type === "branch") return branchHtml(s);
+  return "";
+}
+function fillInlineTable(){
+  const shellRows = slideEl.querySelectorAll(".s3 .shelltable tr");
+  const answerRows = slideEl.querySelectorAll(".s3 [data-answer] .compare tr");
+  if(!shellRows.length || !answerRows.length) return false;
+  answerRows.forEach((row, rowIndex) => {
+    const shellCells = shellRows[rowIndex]?.querySelectorAll("td");
+    const answerCells = row.querySelectorAll("td");
+    if(!shellCells || !answerCells.length) return;
+    answerCells.forEach((cell, cellIndex) => {
+      if(shellCells[cellIndex]){
+        const value = cell.innerHTML || "&nbsp;";
+        const delay = Math.max(0, (rowIndex - 1) * 55 + cellIndex * 24);
+        shellCells[cellIndex].innerHTML = value === "&nbsp;" ? value : `<span class="cell-reveal" style="--d:${delay}ms">${value}</span>`;
+      }
+    });
+  });
+  return true;
+}
+function wire(s){
+  const rb = slideEl.querySelector("[data-act='reveal']");
+  if(rb) rb.addEventListener("click", () => {
+    const ans = slideEl.querySelector("[data-answer]");
+    if(fillInlineTable()){
+      rb.setAttribute("aria-expanded","true");
+      rb.style.display = "none";
+      s.done = true;
+      updateTableBlurLayers(s);
+      updateChrome();
+      return;
+    }
+    if(ans) ans.hidden = false;
+    rb.setAttribute("aria-expanded","true");
+    rb.style.display = "none";
+    s.done = true;
+    if(s.type === "case"){
+      applyStageState(s);
+      setBg(s, meta(s));
+    }
+    updateTableBlurLayers(s);
+    updateChrome();
+  });
+  if(s.done){
+    const ans = slideEl.querySelector("[data-answer]");
+    if(!fillInlineTable() && ans) ans.hidden = false;
+    if(rb) rb.style.display = "none";
+    updateTableBlurLayers(s);
+  }
+  // branch cards; open/closed state persists per slide
+  const cards = slideEl.querySelectorAll("[data-branch]");
+  if(cards.length && !s.branchOpen) s.branchOpen = [];
+  cards.forEach((card, i) => {
+    const causes = card.querySelector(".branch-causes");
+    const tap = card.querySelector(".tap");
+    const setOpen = open => {
+      causes.hidden = !open;
+      card.setAttribute("aria-expanded", String(open));
+      if(tap) tap.style.display = open ? "none" : "";
+    };
+    if(s.branchOpen && s.branchOpen[i]) setOpen(true);
+    const toggle = () => { const open = causes.hidden; if(s.branchOpen) s.branchOpen[i] = open; setOpen(open); };
+    card.addEventListener("click", toggle);
+    card.addEventListener("keydown", e => { if(e.key === "Enter" || e.key === " "){ e.preventDefault(); toggle(); } });
+  });
+}
+function applyStageState(s){
+  const c = meta(s);
+  const hideTell = shouldHideCaseTell(s);
+  const layout = new Set(String(s.layout || "left").split(/\s+/));
+  actTag.textContent = hideTell ? "Diagnostic case" : c.label;
+  stage.classList.remove("dx-blur","obscure-strong");
+  stage.classList.toggle("scrim-right", layout.has("right"));
+  stage.classList.toggle("scrim-center", layout.has("center"));
+  stage.classList.toggle("scrim-left", !layout.has("right") && !layout.has("center") && !layout.has("plain"));
+}
+function sameTable(a,b){
+  return !!a && !!b && a.type === "case" && b.type === "case" && !!a.labs && !!b.labs
+    && (a.layout||"") === (b.layout||"") && a.image === b.image
+    && JSON.stringify(a.labs) === JSON.stringify(b.labs);
+}
+function applyRowFocus(s){
+  slideEl.querySelectorAll(".labtable tr").forEach(tr => {
+    const cell = tr.querySelector("td");
+    const name = cell ? cell.textContent.trim() : "";
+    tr.classList.toggle("rowfocus", !!s.focusLab && name === s.focusLab);
+  });
+}
+function render(direction=0){
+  const s = SLIDES[idx], c = meta(s);
+  applyStageState(s);
+  setBg(s,c,idx === 0);
+  slideEl.style.setProperty("--chapter", c.color);
+  const enter = direction > 0 ? " enter-next" : direction < 0 ? " enter-prev" : "";
+  slideEl.className = `slide ${s.layout || "left"}${enter}`;
+  slideEl.setAttribute("aria-label", slideLabel(s));
+  slideEl.innerHTML = htmlFor(s);
+  slideEl.scrollTop = 0;
+  wire(s);
+  applyRowFocus(s);
+  updateTableBlurLayers(s);
+  updateChrome();
+  requestAnimationFrame(() => requestAnimationFrame(() => { updateTableBlurLayers(s); slideEl.classList.add("is-visible"); }));
+}
+function slideLabel(s){
+  const raw = s.section || s.sectionHtml || s.title || s.caseNo || meta(s).label || "";
+  return raw.replace(/<[^>]+>/g,"").replace(/&ldquo;|&rdquo;/g,'"').replace(/&amp;/g,"&").replace(/&lt;/g,"<").replace(/&gt;/g,">").trim();
+}
+function updateChrome(){
+  counter.textContent = `${idx + 1} / ${SLIDES.length}`;
+  document.getElementById("mobilecrumb").textContent = slideLabel(SLIDES[idx]);
+  document.getElementById("prev").disabled = idx === 0 || isTransitioning;
+  document.getElementById("next").disabled = idx === SLIDES.length - 1 || isTransitioning;
+  progress.innerHTML = "";
+  const gkey = (s,i) => s.caseNo || (s.type + "|" + i);
+  SLIDES.forEach((s,i) => {
+    const seg = document.createElement("div");
+    const unitStart = i > 0 && gkey(s,i) !== gkey(SLIDES[i-1],i-1);
+    seg.className = "seg" + (i <= idx ? " done" : "") + (i === idx ? " current" : "") + (unitStart ? " unitstart" : "");
+    seg.style.setProperty("--segcol", meta(s).color);
+    const lbl = `${i+1}. ${slideLabel(s)}`;
+    seg.setAttribute("data-label", lbl);
+    seg.title = lbl;
+    seg.setAttribute("role","button");
+    seg.setAttribute("aria-label", `Go to slide ${lbl}`);
+    seg.setAttribute("aria-current", i === idx ? "true" : "false");
+    seg.tabIndex = i === idx ? 0 : -1;
+    seg.addEventListener("click", () => transitionTo(i, i - idx));
+    seg.addEventListener("keydown", e => { if(e.key === "Enter" || e.key === " "){ e.preventDefault(); transitionTo(i, i - idx); } });
+    progress.appendChild(seg);
+  });
+}
+function softSwap(target){
+  const headEl = slideEl.querySelector(".case-head");
+  const panelEl = slideEl.querySelector(".panel");
+  if(!headEl || !panelEl){ idx = target; render(0); slideEl.focus({preventScroll:true}); return; }
+  const headChanges = head(SLIDES[target]) !== head(SLIDES[idx]);
+  isTransitioning = true;
+  updateChrome();
+  const nextSlide = SLIDES[target];
+  applyStageState(nextSlide);
+  setBg(nextSlide, meta(nextSlide));
+  updateTableBlurLayers(nextSlide);
+  clearTimeout(timer);
+  if(headChanges) headEl.classList.add("swapping");
+  panelEl.classList.add("swapping");
+  timer = setTimeout(() => {
+    idx = target;
+    const s = SLIDES[idx], c = meta(s);
+    slideEl.style.setProperty("--chapter", c.color);
+    slideEl.setAttribute("aria-label", slideLabel(s));
+    if(headChanges) headEl.innerHTML = head(s);
+    panelEl.innerHTML = panelHtml(s);
+    applyStageState(s);
+    setBg(s,c);
+    wire(s);
+    applyRowFocus(s);
+    updateTableBlurLayers(s);
+    requestAnimationFrame(() => { updateTableBlurLayers(s); headEl.classList.remove("swapping"); panelEl.classList.remove("swapping"); });
+    isTransitioning = false;
+    updateChrome();
+    slideEl.focus({preventScroll:true});
+  }, 200);
+}
+function transitionTo(target,direction=0){
+  if(isTransitioning || target === idx || target < 0 || target >= SLIDES.length) return;
+  if(reduceMotion){ idx = target; render(direction); slideEl.focus({preventScroll:true}); return; }
+  if(sameTable(SLIDES[idx], SLIDES[target])){ softSwap(target); return; }
+  isTransitioning = true;
+  updateChrome();
+  const nextSlide = SLIDES[target];
+  applyStageState(nextSlide);
+  setBg(nextSlide, meta(nextSlide));
+  updateTableBlurLayers(nextSlide);
+  clearTimeout(timer);
+  slideEl.classList.remove("is-visible","enter-next","enter-prev");
+  slideEl.classList.add(direction > 0 ? "leaving-next" : "leaving-prev");
+  timer = setTimeout(() => {
+    idx = target;
+    render(direction);
+    isTransitioning = false;
+    updateChrome();
+    slideEl.focus({preventScroll:true});
+  }, SLIDE_LEAVE_MS);
+}
+function go(d){ transitionTo(idx + d, d); }
+function resetAll(){
+  SLIDES.forEach(s => { delete s.done; delete s.branchOpen; });
+  idx = 0; isTransitioning = false; clearTimeout(timer); render(0);
+}
+document.getElementById("next").addEventListener("click", () => go(1));
+document.getElementById("prev").addEventListener("click", () => go(-1));
+document.getElementById("reset").addEventListener("click", resetAll);
+document.getElementById("resetTop").addEventListener("click", resetAll);
+window.addEventListener("resize", () => updateTableBlurLayers(SLIDES[idx]));
+slideEl.addEventListener("scroll", () => updateTableBlurLayers(SLIDES[idx]), {passive:true});
+document.addEventListener("keydown", e => {
+  if(e.key === "ArrowRight" || e.key === "PageDown"){ go(1); e.preventDefault(); }
+  if(e.key === "ArrowLeft" || e.key === "PageUp"){ go(-1); e.preventDefault(); }
+  if(e.key === "Home"){ transitionTo(0, -1); e.preventDefault(); }
+  if(e.key === "End"){ transitionTo(SLIDES.length - 1, 1); e.preventDefault(); }
+  if((e.key === "Enter" || e.key === " ") && document.activeElement === document.body){
+    const rb = slideEl.querySelector("[data-act='reveal']");
+    if(rb && rb.style.display !== "none"){ rb.click(); e.preventDefault(); }
+  }
+});
+render(0);
+</script>
+</body>
+</html>
