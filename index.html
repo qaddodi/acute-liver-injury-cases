@@ -31,7 +31,7 @@ body{background:#bbb5aa;color:var(--ink);font-family:Georgia,"Times New Roman",T
 .kicker,.titlebox,.panel,.case-grid,.section-title,.section-sub,.byline,.hint,.sub{text-shadow:0 1px 0 rgba(255,255,255,.82),0 0 12px rgba(250,248,241,.88),0 0 26px rgba(250,248,241,.66),0 0 46px rgba(250,248,241,.5)}
 .kicker{color:var(--chapter);font-weight:bold;letter-spacing:.20em;text-transform:uppercase;font-size:13.5px;margin:0 0 8px 1px}
 h1.section,.section-title{color:var(--chapter);font-weight:normal;font-size:clamp(2.7rem,5vw,4.15rem);line-height:1;margin:0 0 18px}.section-title{font-size:clamp(3.2rem,6vw,5rem)}
-.titlebox{max-width:min(680px,100%);overflow-wrap:break-word}.titlebox h1{font-size:clamp(3.4rem,7vw,6rem);line-height:.96;color:#34345e;font-weight:normal;margin:0 0 18px;overflow-wrap:break-word;word-break:normal;hyphens:none}.titlebox .sub,.section-sub{font-size:24px;line-height:1.52;color:var(--muted);max-width:760px}.byline{margin-top:24px;color:#777166;font-size:16px;font-style:italic}.hint{margin-top:28px;font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:#557b8d;font-weight:bold}
+.titlebox{max-width:min(680px,100%);overflow-wrap:break-word}.titlebox h1{font-size:clamp(3.4rem,7vw,6rem);line-height:.96;color:#34345e;font-weight:normal;margin:0 0 18px;overflow-wrap:break-word;word-break:normal;hyphens:none}.titlebox .sub,.section-sub{font-size:24px;line-height:1.52;color:var(--muted);max-width:760px}.byline{margin:24px 0 0;color:#777166;font-size:16px;font-style:italic}.social{display:inline-block;margin-top:7px;color:#4b4a78;font-size:15px;text-decoration:none;letter-spacing:.03em}.social:hover{text-decoration:underline}.hint{margin-top:28px;font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:#557b8d;font-weight:bold}
 h1.section,.section-title,.titlebox h1{text-shadow:0 1px 0 rgba(255,255,255,.95),0 0 12px rgba(249,247,241,.96),0 0 30px rgba(249,247,241,.86),0 0 58px rgba(249,247,241,.72)}
 @supports (color:color-mix(in srgb, red, white)){h1.section,.section-title,.titlebox h1{text-shadow:0 1px 0 rgba(255,255,255,.96),0 0 12px rgba(249,247,241,.96),0 0 26px color-mix(in srgb,var(--chapter) 22%,transparent),0 0 56px color-mix(in srgb,var(--chapter) 16%,rgba(249,247,241,.72))}}
 .panel{background:transparent;border:0;padding:0}.panel p{font-size:1.28rem;line-height:1.5;margin:0 0 15px}.panel .lead{font-size:1.44rem;line-height:1.46}.soft{color:var(--muted);font-style:italic}ul{margin:0 0 8px 24px;padding:0}li{font-size:1.19rem;line-height:1.45;margin:0 0 8px}.callout{margin-top:16px;padding:4px 0 4px 15px;border-left:3px solid var(--chapter)}.callout span{display:block;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--chapter);font-weight:bold;margin-bottom:5px}.callout p{font-size:1.125rem;margin:0;line-height:1.42}
@@ -230,6 +230,7 @@ const SLIDES = [
     "title": "Interpreting the Liver Panel",
     "subtitle": "A pattern-based approach to acute and chronic liver injury",
     "byline": "Mohammad Almeqdadi, MD",
+    "xHandle": "mfalmeqdadi",
     "hint": "Press Next or the right arrow to begin",
     "image": "title.jpg"
   },
@@ -1357,7 +1358,7 @@ function setBg(s,c,instant=false){
   });
 }
 function head(s){ return `${s.kicker ? `<div class="kicker">${esc(s.kicker)}</div>` : ""}${s.sectionHtml ? `<h1 class="section">${s.sectionHtml}</h1>` : s.section ? `<h1 class="section">${esc(s.section)}</h1>` : ""}`; }
-function titleHtml(s){ return `<div class="titlebox">${s.kicker ? `<div class="kicker">${esc(s.kicker)}</div>` : ""}<h1>${esc(s.title)}</h1>${s.subtitle ? `<p class="sub">${esc(s.subtitle)}</p>` : ""}${s.byline ? `<p class="byline">${esc(s.byline)}</p>` : ""}${s.hint ? `<p class="hint">${esc(s.hint)}</p>` : ""}</div>`; }
+function titleHtml(s){ return `<div class="titlebox">${s.kicker ? `<div class="kicker">${esc(s.kicker)}</div>` : ""}<h1>${esc(s.title)}</h1>${s.subtitle ? `<p class="sub">${esc(s.subtitle)}</p>` : ""}${s.byline ? `<p class="byline">${esc(s.byline)}</p>` : ""}${s.xHandle ? `<a class="social" href="https://x.com/${encodeURIComponent(s.xHandle)}" target="_blank" rel="noopener noreferrer" aria-label="${esc(s.xHandle)} on X">X: @${esc(s.xHandle)}</a>` : ""}${s.hint ? `<p class="hint">${esc(s.hint)}</p>` : ""}</div>`; }
 function textHtml(s){
   const sw = s.stackClass || "stack wide";
   if(s.prompt || s.reveal){
