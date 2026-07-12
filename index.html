@@ -28,6 +28,7 @@
 html,body{height:100%;margin:0}
 body{background:#bbb5aa;color:var(--ink);font-family:Georgia,"Times New Roman",Times,serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
 .app{height:100dvh;width:100vw;background:#e9e3d7;display:flex;flex-direction:column;overflow:hidden}
+.print-deck{display:none}
 .topbar{height:59px;flex:0 0 59px;background:#fff;border-bottom:1px solid #dad6ce;display:flex;align-items:center;padding:0 28px;letter-spacing:.16em;text-transform:uppercase;position:relative;z-index:5}
 .case-title{font-size:19px;white-space:nowrap}.act-tag{margin-left:18px;padding-left:18px;border-left:1px solid #dfdbd2;color:#6f685f;font-size:12px}.topbar-actions{margin-left:auto;display:flex;align-items:center;gap:8px}.topbar-btn{border:1px solid #d4cec2;background:#fff;color:#34322f;border-radius:3px;padding:8px 12px;font:700 11px/1 Georgia,"Times New Roman",Times,serif;letter-spacing:.1em;text-transform:uppercase;cursor:pointer}.topbar-btn:hover{background:#f8f5ee;border-color:#aaa294}.topbar-btn:focus-visible{outline:2px solid #34345e;outline-offset:2px}
 .stage{position:relative;flex:1 1 auto;min-height:0;overflow:hidden;background:var(--bg,linear-gradient(120deg,#e8e1d3,#d5d1c8))}
@@ -62,7 +63,28 @@ h1.section,.section-title,.titlebox h1{text-shadow:0 1px 0 rgba(255,255,255,.95)
 @media(max-width:840px){.slide{padding:24px 20px}.act-tag{display:none}.case-grid,.branch-cols{grid-template-columns:1fr}.progress{display:none}.mobilecrumb{display:block}.titlebox h1{font-size:4rem}h1.section{font-size:2.7rem}.case-title{font-size:16px}}
 @media(max-width:500px){.topbar{padding:0 14px}.topbar-actions{gap:6px}.topbar-btn{padding:8px 9px}.fullscreen-btn{width:38px;height:34px;padding:0;font-size:0}.fullscreen-btn:before{content:"\26F6";font:20px/1 sans-serif}}
 @media (prefers-reduced-motion:reduce){.slide,.bg-layer{transition:none!important;transform:none!important;filter:none!important}}
-@media print{body{background:white}.app{height:auto;overflow:visible}.nav,.topbar{display:none}.stage,.slide{position:static;height:auto;overflow:visible}.slide{page-break-after:always;opacity:1;transform:none;filter:none}.bg-layer,.stage:after{display:none}.reveal-btn{display:none!important}.answer[hidden]{display:block!important}}
+@media print{
+  @page{margin:.55in}
+  body{background:#fff;color:#111}
+  .app{display:none!important}
+  .print-deck{display:block}
+  .print-slide{--chapter:#34345e;page-break-after:always;break-after:page;padding:0;color:#111}
+  .print-slide:last-child{page-break-after:auto;break-after:auto}
+  .print-slide-number{margin:0 0 16px;padding-bottom:7px;border-bottom:1px solid #bbb;color:#555;font:700 9pt/1.2 Georgia,"Times New Roman",Times,serif;letter-spacing:.12em;text-transform:uppercase}
+  .print-slide .stack,.print-slide .stack.wide,.print-slide .case-stack,.print-slide .titlebox{width:100%;max-width:none;margin:0}
+  .print-slide .titlebox h1,.print-slide h1.section,.print-slide .section-title{font-size:25pt;text-shadow:none;margin-bottom:12px}
+  .print-slide .titlebox .sub,.print-slide .section-sub{font-size:14pt;line-height:1.35}
+  .print-slide .kicker,.print-slide .panel,.print-slide .case-grid,.print-slide .section-title,.print-slide .section-sub,.print-slide .byline,.print-slide .sub{text-shadow:none}
+  .print-slide .case-grid{grid-template-columns:38% 1fr;gap:24px}
+  .print-slide .labwrap,.print-slide .tablewrap{background:#fff;border:1px solid #aaa;backdrop-filter:none;-webkit-backdrop-filter:none}
+  .print-slide .labtable td,.print-slide .compare th,.print-slide .compare td{font-size:10.5pt;padding:6px 8px}
+  .print-slide .panel p,.print-slide li,.print-slide .keylist>li{font-size:11pt;line-height:1.32}
+  .print-slide .qstem{font-size:12pt;font-weight:bold}
+  .print-slide .answer{display:block!important;animation:none;border-top:1px solid #aaa}
+  .print-slide .branch-causes{display:block!important}
+  .print-slide .reveal-btn,.print-slide .tap,.print-slide .hint{display:none!important}
+  .print-slide .answer,.print-slide .pearl,.print-slide .redflag,.print-slide .trivia,.print-slide .formula,.print-slide .branch-card,.print-slide table{break-inside:avoid}
+}
 /* --- projector readability pass: larger type, with spacing reclaimed to preserve layouts --- */
 @media (min-width:841px){
   .slide{padding-top:32px;padding-bottom:22px}
@@ -198,6 +220,7 @@ h1.section,.section-title,.titlebox h1{text-shadow:0 1px 0 rgba(255,255,255,.95)
   <main class="stage" id="stage"><div class="bg-layer is-active" id="bgLayerA" aria-hidden="true"></div><div class="bg-layer" id="bgLayerB" aria-hidden="true"></div><section class="slide title-slide right" id="slide" tabindex="-1" role="region" aria-label="Interpreting the Liver Panel"><div class="titlebox"><div class="kicker">Interactive Case Deck</div><h1>Interpreting the Liver Panel</h1><p class="sub">A pattern-based approach to acute and chronic liver injury</p><p class="byline">Mohammad Almeqdadi, MD</p><a class="social" href="https://x.com/mfalmeqdadi" target="_blank" rel="noopener noreferrer">X: @mfalmeqdadi</a><p class="hint">Enable JavaScript to use the interactive case deck.</p></div></section></main>
   <footer class="nav"><div class="progress" id="progress"></div><span class="mobilecrumb" id="mobilecrumb"></span><span class="divider"></span><span class="counter" id="counter"></span><div class="rightnav"><button class="navbtn" id="prev"><span class="chev">&lsaquo;</span> Prev</button><button class="navbtn" id="next">Next <span class="chev">&rsaquo;</span></button></div></footer>
 </div>
+<div class="print-deck" id="printDeck" aria-label="Printable version of the complete slide deck"></div>
 <script>
 const CHAPTERS = {
   "title": {
@@ -1517,6 +1540,13 @@ function htmlFor(s){
   if(s.type === "branch") return branchHtml(s);
   return "";
 }
+function buildPrintDeck(){
+  const printDeck = document.getElementById("printDeck");
+  printDeck.innerHTML = SLIDES.map((s, i) => {
+    const chapter = meta(s);
+    return `<article class="print-slide" style="--chapter:${chapter.color}"><div class="print-slide-number">${esc(i + 1)} / ${esc(SLIDES.length)} &middot; ${esc(slideLabel(s))}</div>${htmlFor(s)}</article>`;
+  }).join("");
+}
 function fillInlineTable(){
   const shellRows = slideEl.querySelectorAll(".s3 .shelltable tr");
   const answerRows = slideEl.querySelectorAll(".s3 [data-answer] .compare tr");
@@ -1734,6 +1764,7 @@ document.addEventListener("keydown", e => {
     if(rb && rb.style.display !== "none"){ rb.click(); e.preventDefault(); }
   }
 });
+buildPrintDeck();
 render(0);
 </script>
 </body>
