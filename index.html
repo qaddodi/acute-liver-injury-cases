@@ -321,12 +321,12 @@ const SLIDES = [
       },
       {
         "name": "ALP",
-        "value": "800",
+        "value": "120",
         "clue": false
       },
       {
         "name": "GGT",
-        "value": "650",
+        "value": "70",
         "clue": false
       },
       {
@@ -433,9 +433,9 @@ const SLIDES = [
         "clue": true
       }
     ],
-    "answerTitle": "Alcoholic hepatitis",
-    "answer": "<ul class='keylist'><li><b>AST:ALT &gt; 2</b>, with AST in the <b>100s</b>, not the 1000s.</li><li>AST in the 1000s is not alcoholic hepatitis; look for another cause.</li><li><b>Bilirubin and INR</b> define severity.</li><li><b>MELD</b> is replacing the Maddrey discriminant function in many centers because it predicts mortality more accurately.</li></ul>",
-    "image": "alcoholic-hepatitis.jpg"
+    "answerTitle": "Alcohol-associated hepatitis",
+    "answer": "<ul class='keylist'><li><b>AST:ALT &gt; 2</b>, with AST in the <b>100s</b>, not the 1000s.</li><li>AST in the 1000s is not alcohol-associated hepatitis; look for another cause.</li><li><b>Bilirubin and INR</b> define severity.</li><li><b>MELD</b> is replacing the Maddrey discriminant function in many centers because it predicts mortality more accurately.</li></ul>",
+    "image": "alcohol-associated-hepatitis.jpg"
   },
   {
     "type": "text",
@@ -443,10 +443,10 @@ const SLIDES = [
     "layout": "right",
     "stackClass": "stack wide narrow alcohol-ratio-stack",
     "section": "Why AST:ALT > 2 in alcohol",
-    "body": "<p class='lead'>In alcoholic liver disease the ratio is classically greater than 2.</p>",
+    "body": "<p class='lead'>In alcohol-associated liver disease the ratio is classically greater than 2.</p>",
     "prompt": "<b>Why is AST:ALT greater than 2 in alcohol use?</b>",
     "revealLabel": "Reveal the mechanism",
-    "reveal": "<p>Both AST and ALT are transaminases, and both need <b>pyridoxal 5'-phosphate (PLP, the active form of vitamin B6)</b> as a cofactor to work.</p><p><b>ALT is about twice as dependent on PLP as AST.</b> Chronic alcohol use depletes B6, so ALT activity falls roughly twice as much as AST activity. The measured ALT drops, and the ratio settles around 2:1.</p><p>Mitochondrial AST released from alcohol-injured hepatocytes adds further to the AST side, pushing the ratio higher still.</p>",
+    "reveal": "<p>Both AST and ALT are transaminases, and both need <b>pyridoxal 5'-phosphate (PLP, the active form of vitamin B6)</b> as a cofactor to work.</p><p><b>ALT is about twice as dependent on PLP as AST.</b> Chronic alcohol use causes a <b>functional PLP deficiency</b>, so ALT activity falls roughly twice as much as AST activity. The measured ALT drops, and the ratio settles around 2:1.</p><p>Mitochondrial AST released from alcohol-injured hepatocytes adds further to the AST side, pushing the ratio higher still.</p>",
     "image": "ast-alt-ratio.jpg"
   },
   {
@@ -469,12 +469,12 @@ const SLIDES = [
       },
       {
         "name": "ALP",
-        "value": "1,000",
+        "value": "130",
         "clue": false
       },
       {
         "name": "GGT",
-        "value": "900",
+        "value": "55",
         "clue": false
       },
       {
@@ -676,7 +676,7 @@ const SLIDES = [
       }
     ],
     "answerTitle": "Acute liver injury in chronic alcohol use",
-    "answer": "<ul class='keylist'><li><b>AST:ALT &gt; 2</b> fits alcohol, but values in the <b>thousands</b> are not alcoholic hepatitis.</li><li>Alcohol hallmarks:<ul class='subbul'><li>High GGT</li><li>High MCV</li><li>Low platelets</li><li>AST:ALT &gt; 2</li></ul></li><li>The alcohol pattern does not close the workup; keep looking for a second injury.</li></ul>",
+    "answer": "<ul class='keylist'><li><b>AST:ALT &gt; 2</b> fits alcohol, but values in the <b>thousands</b> are not alcohol-associated hepatitis.</li><li>Alcohol hallmarks:<ul class='subbul'><li>High GGT</li><li>High MCV</li><li>Low platelets</li><li>AST:ALT &gt; 2</li></ul></li><li>The alcohol pattern does not close the workup; keep looking for a second injury.</li></ul>",
     "image": "alcohol-plus-acute-injury.jpg"
   },
   {
@@ -1419,8 +1419,8 @@ const PEARLS = {
     pearl: "Transaminases in ischemic hepatitis peak fast (24 to 48 hours after the insult) and fall fast once perfusion is restored. Early LDH elevation with ALT:LDH < 1.5 helps separate it from acute viral hepatitis.",
     redFlag: "Find and treat the hemodynamic cause: shock, arrhythmia, decompensated heart failure, or hypoxemia. Fixing perfusion is the therapy."
   },
-  "Alcoholic hepatitis": {
-    pearl: "AST rarely exceeds about 300 to 400 U/L in pure alcoholic hepatitis, and AST:ALT is usually > 2. Values in the thousands demand a second explanation such as acetaminophen, ischemia, or viral hepatitis.",
+  "Alcohol-associated hepatitis": {
+    pearl: "AST rarely exceeds about 300 to 400 U/L in pure alcohol-associated hepatitis, and AST:ALT is usually > 2. Values in the thousands demand a second explanation such as acetaminophen, ischemia, or viral hepatitis.",
     redFlag: "Grade severity with MELD (or Maddrey discriminant function >= 32). Consider corticosteroids in severe disease, then reassess at day 7 with the Lille score."
   },
   "Acetaminophen toxicity": {
@@ -1431,7 +1431,7 @@ const PEARLS = {
     pearl: "AST is not liver-specific: skeletal and cardiac muscle, red cells, and kidney all release it. A large AST with a much smaller ALT points away from the liver; confirm the muscle source with CK."
   },
   "Acute liver injury in chronic alcohol use": {
-    pearl: "The alcohol signature (AST:ALT > 2, high GGT and MCV, low platelets) can mask a second, acute injury. Transaminases in the thousands are never just alcoholic hepatitis, so keep working the differential."
+    pearl: "The alcohol signature (AST:ALT > 2, high GGT and MCV, low platelets) can mask a second, acute injury. Transaminases in the thousands are never just alcohol-associated hepatitis, so keep working the differential."
   },
   "Cholestatic injury": {
     pearl: "Confirm the cholestatic pattern with R factor < 2, then order a right upper quadrant ultrasound first to separate obstructive (dilated ducts) from non-obstructive causes."
